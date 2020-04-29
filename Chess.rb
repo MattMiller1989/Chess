@@ -213,6 +213,41 @@ class King <Game_Piece
     
 end
 
+class Pawn <Game_Piece
+    attr_accessor :x,:y
+    def initialize(x,y)
+        @x=x
+        @y=y
+        
+    end
+
+    def is_move_allowed(to_x,to_y,attack=false,first_move=false)
+        allowed=false
+        
+        x_diff=(to_x-@x).abs
+        y_diff=(to_y-@y).abs
+        
+        if first_move
+            if x_diff==2 && y_diff==0
+                allowed=true
+            end
+        else
+            if attack
+                if x_diff==1 && y_diff==1
+                    allowed= true
+                end
+            else
+                if x_diff==1 && y_diff==0
+                    allowed=true
+                end 
+
+            end
+        end
+
+        return allowed
+    end
+end
+
 
 
 

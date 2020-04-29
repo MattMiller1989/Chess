@@ -301,6 +301,66 @@ describe King do
 
     end
 end
+describe Pawn do
+    before(:each) do
+        @test_pawn=Pawn.new(4,4)
+    end
+    describe "#is_move_allowed" do
+        it "Allows +1 +0" do
+
+            expect(@test_pawn.is_move_allowed(5,4)).to eql true
+        end
+        it "Allows -1 +0" do
+
+            expect(@test_pawn.is_move_allowed(3,4)).to eql true
+        end
+        it "Allows -1 -1 on Attack" do
+
+            expect(@test_pawn.is_move_allowed(3,3,true)).to eql true
+        end
+        it "Allows -1 +1 on Attack" do
+
+            expect(@test_pawn.is_move_allowed(3,5,true)).to eql true
+        end
+        it "Does not Allows +0 -1 on attack" do
+
+            expect(@test_pawn.is_move_allowed(4,3,true)).to eql false
+        end
+        it "Does not Allows +1 +0" do
+
+            expect(@test_pawn.is_move_allowed(5,4,true)).to eql false
+        end
+        it "Does not Allows +2 +2" do
+
+            expect(@test_pawn.is_move_allowed(6,6)).to eql false
+        end
+        it "Does not Allows +0 +3" do
+
+            expect(@test_pawn.is_move_allowed(4,7)).to eql false
+        end
+        it "Does not Allows +0 +0" do
+
+            expect(@test_pawn.is_move_allowed(4,4)).to eql false
+        end
+        it "Does not Allows -1 +3" do
+
+            expect(@test_pawn.is_move_allowed(3,7)).to eql false
+        end
+        it "Allows +2 +0 on first move" do
+
+            expect(@test_pawn.is_move_allowed(6,4,false,true)).to eql true
+        end
+        it "Allows -2 +0 on first move" do
+
+            expect(@test_pawn.is_move_allowed(2,4,false,true)).to eql true
+        end
+        it "Does not Allows -2 +1 on first move" do
+
+            expect(@test_pawn.is_move_allowed(2,5,false,true)).to eql false
+        end
+
+    end
+end
 
             
 
