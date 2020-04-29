@@ -76,3 +76,33 @@ describe Game_Piece do
     
 
 end
+
+describe Rook do
+    before(:each) do
+        @test_rook=Rook.new(1,3)
+    end
+    describe "#is_move_allowed" do
+        it "Allows horizontal moves" do
+
+            expect(@test_rook.is_move_allowed(1,7)).to eql true
+        end
+        it "Allows vertical moves" do
+
+            expect(@test_rook.is_move_allowed(4,3)).to eql true
+        end
+        it "Does not allow diagonal moves" do
+
+            expect(@test_rook.is_move_allowed(3,5)).to eql false
+        end
+        it "Allows horizontal moves" do
+
+            expect(@test_rook.is_move_allowed(4,5)).to eql false
+        end
+    end
+end
+
+            
+
+
+
+
