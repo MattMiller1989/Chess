@@ -1,11 +1,21 @@
 require_relative 'Pieces'
 
+class Game_runner
+
+    def initialize
+        my_board=Game_board.new
+                
+    end
+
+
+end
+
 class Game_board
     attr_accessor :curr_board
     attr_reader   :disp_array
     def initialize
-        @curr_board=create_board
-       
+        @curr_board=create_board  #Creates the Board
+                     #Creates Game piece objects for the board
         
     end
     def create_board
@@ -17,24 +27,67 @@ class Game_board
                 [" "," "," "," "," "," "," "," "],
                 ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
                 ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
-                return board
+        return create_pieces(board)
+        
     end
-    def display_board
-        @disp_array=[["8","♜","♞","♝","♛","♚","♝","♞","♜"],
-                    ["7","♟","♟","♟","♟","♟","♟","♟","♟"],
+    def create_pieces(text_board)           #Goes through the board and turns the text version of the pieces into the proper disp unicode
+        board=[]
+        text_board.each_with_index do |p,r|
+            row=[]
+            p.each_with_index do |e,c|
+                if e != " "
+                    # board[r][c]=(create_piece(e,r,c))
+                    row.push(create_piece(e,r,c))
+                else
+                    row.push(" ")
+                end
+            end
+            board.push(row)
+        end
+        return board
+
+        
+
+    end
+    def create_piece(e,r,c)    #Returns a new object for each of the game pieces
+        piece_map={
+            
+                "Rb"=>Rook.new(r,c,'b'),
+                "Nb"=>Knight.new(r,c,'b'),
+                "Bb"=>Bishop.new(r,c,'b'),
+                "Qb"=>Queen.new(r,c,'b'),
+                "Kb"=>King.new(r,c,'b'),
+                "Pb"=>Pawn.new(r,c,'b'),
+                "Rw"=>Rook.new(r,c,'w'),
+                "Nw"=>Knight.new(r,c,'w'),
+                "Bw"=>Bishop.new(r,c,'w'),
+                "Qw"=>Queen.new(r,c,'w'),
+                "Kw"=>King.new(r,c,'w'),
+                "Pw"=>Pawn.new(r,c,'w'),
+        
+        }
+
+        return piece_map[e]
+        
+        
+    end
+    def display_board                           #modifies the gameboard to a 'display-ready' format
+        @disp_array=[["8"," "," "," "," "," "," "," "," "],
+                    ["7"," "," "," "," "," "," "," "," "],
                     ["6"," "," "," "," "," "," "," "," "],
                     ["5"," "," "," "," "," "," "," "," "],
                     ["4"," "," "," "," "," "," "," "," "],
                     ["3"," "," "," "," "," "," "," "," "],
-                    ["2","♙","♙","♙","♙","♙","♙","♙","♙"],
-                    ["1","♖","♘","♗","♕","♔","♗","♘","♖"],
+                    ["2"," "," "," "," "," "," "," "," "],
+                    ["1"," "," "," "," "," "," "," "," "],
                     [" ","a","b","c","d","e","f","g","h"]]
 
+        
         @curr_board.each_with_index do |row,r|
             row.each_with_index do |e,c|
-                if e.match(/^[RNBQKP][bw]$/)
-                    disp_array[r][c+1]=replace_square(e)
-                end
+                 
+                disp_array[r][c+1]=e.to_s
+                
             end
         end
     end
@@ -51,205 +104,34 @@ class Game_board
     
 
     end
-    def replace_square(s)
-        disp_map={
-                "Rb"=>"♜",
-                "Nb"=>"♞",
-                "Bb"=>"♝",
-                "Qb"=>"♛",
-                "Kb"=>"♚",
-                "Pb"=>"♟",
-                "Rw"=>"♖",
-                "Nw"=>"♘",
-                "Bw"=>"♗",
-                "Qw"=>"♕",
-                "Kw"=>"♔",
-                "Pw"=>"♙",
-        }
+    # def replace_square(s)
+    #     disp_map={
+    #             "Rb"=>"♜",
+    #             "Nb"=>"♞",
+    #             "Bb"=>"♝",
+    #             "Qb"=>"♛",
+    #             "Kb"=>"♚",
+    #             "Pb"=>"♟",
+    #             "Rw"=>"♖",
+    #             "Nw"=>"♘",
+    #             "Bw"=>"♗",
+    #             "Qw"=>"♕",
+    #             "Kw"=>"♔",
+    #             "Pw"=>"♙",
+    #     }
 
-        return disp_map[s]
-    end
+    #     return disp_map[s]
+    # end
 
 
 end
-# class Game_Piece
-#     attr_accessor :x,:y
-#     attr_reader :move_tree
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-
-#     end
-    
-#     def move(to_x,to_y)
-#         @x=to_x
-#         @y=to_y
-        
-#     end
-# end
-
-
-# class Rook < Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y)
-#         allowed=false
-#         if @x==to_x || @y==to_y
-#             allowed=true
-#         end
-#         if @x==to_x && @y==to_y
-#             allowed=false
-#         end
-        
-#         return allowed
-#     end
-    
-# end
-
-# class Knight <Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y)
-#         allowed=false
-        
-#         if (to_x==x+2 || to_x == x-2) && (to_y==y+1 || to_y==y-1)
-#             allowed=true
-#         end
-#         if (to_x==x+1 || to_x==x-1) && (to_y==y+2 || to_y==y-2)
-#             allowed=true
-#         end
-        
-#         return allowed
-#     end
-    
-# end
-
-# class Bishop <Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y)
-#         allowed=false
-        
-#         x_diff=to_x-@x
-#         y_diff=to_y-@y
-        
-#         if x_diff.abs==y_diff.abs
-            
-#             allowed=true
-#         end
-        
-#         return allowed
-#     end
-    
-# end
-
-# class Queen <Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y)
-#         allowed=false
-        
-#         x_diff=to_x-@x
-#         y_diff=to_y-@y
-        
-#         if x_diff.abs==y_diff.abs
-            
-#             allowed=true
-#         end
-#         if @x==to_x || @y==to_y
-#             allowed=true
-#         end
-#         if @x==to_x && @y==to_y
-#             allowed=false
-#         end
-#         return allowed
-#     end
-    
-# end
-
-# class King <Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y)
-#         allowed=false
-        
-#         x_diff=(to_x-@x).abs
-#         y_diff=(to_y-@y).abs
-        
-#         if x_diff <=1 && y_diff <=1
-#             allowed= true
-#         end
-#         if x==to_x && y==to_y
-#             allowed = false
-#         end
-
-#         return allowed
-#     end
-    
-# end
-
-# class Pawn <Game_Piece
-#     attr_accessor :x,:y
-#     def initialize(x,y)
-#         @x=x
-#         @y=y
-        
-#     end
-
-#     def is_move_allowed(to_x,to_y,attack=false,first_move=false)
-#         allowed=false
-        
-#         x_diff=(to_x-@x).abs
-#         y_diff=(to_y-@y).abs
-        
-#         if first_move
-#             if x_diff==2 && y_diff==0
-#                 allowed=true
-#             end
-#         else
-#             if attack
-#                 if x_diff==1 && y_diff==1
-#                     allowed= true
-#                 end
-#             else
-#                 if x_diff==1 && y_diff==0
-#                     allowed=true
-#                 end 
-
-#             end
-#         end
-
-#         return allowed
-#     end
-# end
 
 
 
+# my_bish=Bishop.new(4,4)
+# my_bish.is_move_allowed(2,6)
 
- my_bish=Bishop.new(4,4)
- my_bish.is_move_allowed(2,6)
+my_board=Game_board.new
+# my_board.create_pieces
+
+my_board.print_board

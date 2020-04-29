@@ -19,10 +19,11 @@ end
 
 class Rook < Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
-        
+        @team=team
     end
 
     def is_move_allowed(to_x,to_y)
@@ -36,14 +37,24 @@ class Rook < Game_Piece
         
         return allowed
     end
+
+    def to_s
+        if @team=='w'
+            return "♖"
+        else
+            return "♜"
+        end
+    end
     
 end
 
 class Knight <Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
+        @team=team
         
     end
 
@@ -59,14 +70,23 @@ class Knight <Game_Piece
         
         return allowed
     end
+    def to_s
+        if @team=='w'
+            return "♘"
+        else
+            return "♞"
+        end
+    end
     
 end
 
 class Bishop <Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
+        @team=team
         
     end
 
@@ -83,15 +103,23 @@ class Bishop <Game_Piece
         
         return allowed
     end
+    def to_s
+        if @team=='w'
+            return "♗"
+        else
+            return "♝"
+        end
+    end
     
 end
 
 class Queen <Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
-        
+        @team=team
     end
 
     def is_move_allowed(to_x,to_y)
@@ -112,14 +140,23 @@ class Queen <Game_Piece
         end
         return allowed
     end
+    def to_s
+        if @team=='w'
+            return "♕"
+        else
+            return "♛"
+        end
+    end
     
 end
 
 class King <Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
+        @team=team
         
     end
 
@@ -138,14 +175,23 @@ class King <Game_Piece
 
         return allowed
     end
+    def to_s
+        if @team=='w'
+            return "♔"
+        else
+            return "♚"
+        end
+    end
     
 end
 
 class Pawn <Game_Piece
     attr_accessor :x,:y
-    def initialize(x,y)
+    attr_reader :team
+    def initialize(x,y,team=nil)
         @x=x
         @y=y
+        @team=team
         
     end
 
@@ -174,5 +220,11 @@ class Pawn <Game_Piece
 
         return allowed
     end
+    def to_s
+        if @team=='w'
+            return "♙"
+        else
+            return "♟"
+        end
+    end
 end
-#
