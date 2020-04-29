@@ -1,4 +1,5 @@
 require_relative 'Pieces'
+require_relative 'Move'
 
 class Game_runner
 
@@ -71,7 +72,17 @@ class Game_board
         
         
     end
-    def display_board                           #modifies the gameboard to a 'display-ready' format
+
+    def make_move(move_input)
+        start=move_input[0..2]
+        go_to=move_input[2..4]
+       
+        piece=@curr_board[start[0]][start[1]]
+
+        my_move=Move.new(piece,go_to,@curr_board)
+        return my_move
+    end
+    def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],
                     ["7"," "," "," "," "," "," "," "," "],
                     ["6"," "," "," "," "," "," "," "," "],
@@ -92,7 +103,7 @@ class Game_board
         end
     end
         
-    def print_board
+    def print_board     #Prints the board onto the command line!
         display_board
         @disp_array.each_with_index do |n,r|
             
@@ -104,25 +115,7 @@ class Game_board
     
 
     end
-    # def replace_square(s)
-    #     disp_map={
-    #             "Rb"=>"♜",
-    #             "Nb"=>"♞",
-    #             "Bb"=>"♝",
-    #             "Qb"=>"♛",
-    #             "Kb"=>"♚",
-    #             "Pb"=>"♟",
-    #             "Rw"=>"♖",
-    #             "Nw"=>"♘",
-    #             "Bw"=>"♗",
-    #             "Qw"=>"♕",
-    #             "Kw"=>"♔",
-    #             "Pw"=>"♙",
-    #     }
-
-    #     return disp_map[s]
-    # end
-
+   
 
 end
 
