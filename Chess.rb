@@ -90,22 +90,50 @@ end
 
 
 class Rook < Game_Piece
-
+    attr_accessor :x,:y
     def initialize(x,y)
-        super(@x,@y)
-        @move_tree=create_tree
+        @x=x
+        @y=y
+        
     end
 
-    def create_tree
+    def is_move_allowed(to_x,to_y)
+        allowed=false
+        if @x==to_x || @y==to_y
+            allowed=true
+        end
+        if @x==to_x && @y==to_y
+            allowed=false
+        end
         
+        return allowed
+    end
+    
+end
+
+class Knight <Game_Piece
+    attr_accessor :x,:y
+    def initialize(x,y)
+        @x=x
+        @y=y
+        
+    end
+
+    def is_move_allowed(to_x,to_y)
+        allowed=false
+        
+        
+        return allowed
     end
     
 end
 
 
 
+
 # my_board=Game_board.new
 
 #
+# rook_boi=Rook.new(3,4)
 
-rook_boi=Rook.new(3,4)
+# puts "x: #{rook_boi.x} y: #{rook_boi.y}"
