@@ -74,6 +74,7 @@ class Game_board
 end
 class Game_Piece
     attr_accessor :x,:y
+    attr_reader :move_tree
     def initialize(x,y)
         @x=x
         @y=y
@@ -88,7 +89,23 @@ class Game_Piece
 end
 
 
+class Rook < Game_Piece
 
-my_board=Game_board.new
+    def initialize(x,y)
+        super(@x,@y)
+        @move_tree=create_tree
+    end
+
+    def create_tree
+        
+    end
+    
+end
+
+
+
+# my_board=Game_board.new
 
 #
+
+rook_boi=Rook.new(3,4)
