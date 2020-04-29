@@ -6,7 +6,7 @@ class Game_board
     def initialize
         @curr_board=create_board
        
-        print_board
+        
     end
     def create_board
         board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
@@ -80,10 +80,15 @@ class Game_Piece
 
     end
     
-
-
+    def move(to_x,to_y)
+        @x=to_x
+        @y=to_y
+        
+    end
 end
+
+
 
 my_board=Game_board.new
 
-my_board.print_board
+#
