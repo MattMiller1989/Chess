@@ -1,4 +1,5 @@
 require_relative '../Chess'
+require_relative '../Pieces'
 
 describe Game_board do
     before(:each) do
