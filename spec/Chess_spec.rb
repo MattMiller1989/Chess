@@ -1,6 +1,32 @@
 require_relative '../Chess'
 require_relative '../Pieces'
 
+describe Move do
+    describe "is_valid" do
+        before(:each) do
+            # @my_game=Game_board.new
+            @board =[[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," "," "," "," "," "],
+                    [" ","Rb"," "," ","Pb"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
+            @my_game=Game_board.new(@board)
+        end
+        it "allows a rook to move two spaces" do
+            test_move=@my_game.make_move("b5d5")
+            expect(test_move.is_valid).to eql true
+        end
+        it "does not allow move if path is blocked" do
+            test_move=@my_game.make_move("b5h5")
+            expect(test_move.is_valid).to eql false
+        end
+
+    end
+
+end
 describe Game_board do
     before(:each) do
         @test_game=Game_board.new
@@ -69,10 +95,18 @@ describe Game_board do
             
             expect((test_move.piece.to_s)).to eql "♟"
         end
+        it "Returns the correct end point for the move " do
+
+            
+            test_move=@my_game.make_move("e7e6")
+            
+            expect((test_move.end_point)).to eql [2,4]
+        end
 
     end
  
 end
+
 
 
 describe Game_Piece do
