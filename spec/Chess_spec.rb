@@ -101,9 +101,44 @@ describe Rook do
             
             expect(@test_rook.check_path(5,3,board)).to eql false
         end
-        # it "returns true if path is clear" do
-
-        # end
+        it "returns true if path is clear" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝"," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            expect(@test_rook.check_path(2,3,board)).to eql true
+        end
+        it "returns true if path is clear horizontally one spot" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(4,2)
+            expect(@rook_boi.check_path(4,3,board)).to eql true
+        end
+        it "returns false if path is clear horizontally three spot" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(4,2)
+            expect(@rook_boi.check_path(4,5,board)).to eql false
+        end
     end
 end
 
