@@ -126,7 +126,7 @@ describe Rook do
             @rook_boi=Rook.new(4,2)
             expect(@rook_boi.check_path(4,3,board)).to eql true
         end
-        it "returns false if path is clear horizontally three spot" do
+        it "returns false if path is full horizontally three spot" do
             board=  [[" "," "," "," "," "," "," "," "],
                     [" "," "," "," "," "," "," "," "],
                     [" "," "," "," "," "," "," "," "],
@@ -138,6 +138,58 @@ describe Rook do
             
             @rook_boi=Rook.new(4,2)
             expect(@rook_boi.check_path(4,5,board)).to eql false
+        end
+        it "returns true if path is clear horizontally four spot" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(6,2)
+            expect(@rook_boi.check_path(6,6,board)).to eql true
+        end
+        it "returns false if verical path is full" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(0,3)
+            expect(@rook_boi.check_path(6,3,board)).to eql false
+        end
+        it "returns true if left path is empty" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(6,6)
+            expect(@rook_boi.check_path(0,6,board)).to eql true
+        end
+        it "returns false if left path is obstructed" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            @rook_boi=Rook.new(5,6)
+            expect(@rook_boi.check_path(5,2,board)).to eql false
         end
     end
 end
@@ -245,21 +297,21 @@ describe Bishop do
         end
     end
     describe "#check_path" do
-        # before(:each) do
-        #     board=  [[" "," "," "," "," "," "," "," "],
-        #             [" "," "," "," "," "," "," "," "],
-        #             [" "," "," "," "," ","♝"," "," "],
-        #             [" "," "," ","♝","♝"," "," "," "],
-        #             [" "," ","♝"," "," "," ","♝"," "],
-        #             [" "," "," "," ","♝"," "," "," "],
-        #             [" "," "," "," "," "," "," "," "],
-        #             [" "," "," "," "," "," "," "," "]]
+        before(:each) do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," ","♝"," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," "," "," ","♝"," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
 
-        # end
-        # it "#returns true if the path is clear" do
-        #     expect(@test_bish.check_path(5,5,@board)).to eql true
+        end
+        it "#returns true if the path is clear" do
+            expect(@test_bish.check_path(5,5,@board)).to eql true
 
-        # end
+        end
         it "#returns false if the path is obstructed" do
             expect(@test_bish.check_path(2,2,@board)).to eql false
 
@@ -321,6 +373,40 @@ describe Queen do
 
             expect(@test_queen.is_move_allowed(4,3)).to eql true
         end
+    end
+    describe "#check_path" do
+        before(:each) do
+            @board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," ","♝"," "," ","♝","♝"," "],
+                    [" "," "," ","♝"," "," "," "," "],
+                    ["♝"," "," "," ","Q"," "," "," "],
+                    [" "," "," "," "," "," ","♝"," "],
+                    [" "," ","♝"," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+
+        end
+        it "#returns true if the path is clear" do
+            expect(@test_queen.check_path(5,5,@board)).to eql true
+
+        end
+        it "#returns false if the path is obstructed" do
+            expect(@test_queen.check_path(2,2,@board)).to eql false
+
+        end
+        it "#returns true if path is clear for right horizontal movements" do
+            expect(@test_queen.check_path(4,6,@board)).to eql true
+
+        end
+        it "#returns true if path is clear for left horizontal movements" do
+            expect(@test_queen.check_path(4,1,@board)).to eql true
+
+        end
+        it "#returns true if path is clear for right diagonal movements" do
+            expect(@test_queen.check_path(6,6,@board)).to eql true
+
+        end
+
     end
 end
 

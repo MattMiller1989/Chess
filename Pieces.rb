@@ -17,7 +17,7 @@ end
 
 
 
-class Rook < Game_Piece
+class Rook < Game_Piece     
     attr_accessor :x,:y
     attr_reader :team
     def initialize(x,y,team=nil)
@@ -26,7 +26,7 @@ class Rook < Game_Piece
         @team=team
     end
 
-    def is_move_allowed(to_x,to_y)
+    def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         if @x==to_x || @y==to_y
             allowed=true
@@ -40,18 +40,29 @@ class Rook < Game_Piece
         return allowed
     end
 
-    def check_path(to_x,to_y,curr_board)
+    def check_path(to_x,to_y,curr_board) #Checks to make sure if the path is clear for the requested move
+        
         x_diff=to_x-@x
         y_diff=to_y-@y
+        # puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
+        x_dist = (x_diff).abs
+        y_dist = (y_diff).abs
         
-        dist = (x_diff-y_diff).abs
         path = []
-        for r in @x..to_x
-            for c in @y..to_y
-                
-                path.push(curr_board[r][c])
+        
+        x_diff>0 ? x_dir=1:x_dir=-1
+        y_diff>0 ? y_dir=1:y_dir=-1 
+
+        for i in 0..x_dist
+            for j in 0..y_dist
+                #puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+                path.push(curr_board[@x+(i*x_dir)][@y+(j*y_dir)])
             end
+
         end
+
+        
+        # puts  "Path: #{path}" 
         path.shift
         path.pop
         # puts  "Path: #{path}" 
@@ -81,7 +92,7 @@ class Knight <Game_Piece
         
     end
 
-    def is_move_allowed(to_x,to_y)
+    def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         if (to_x==x+2 || to_x == x-2) && (to_y==y+1 || to_y==y-1)
@@ -119,7 +130,7 @@ class Bishop <Game_Piece
         
     end
 
-    def is_move_allowed(to_x,to_y)
+    def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         x_diff=to_x-@x
@@ -132,39 +143,29 @@ class Bishop <Game_Piece
         
         return allowed
     end
-    def check_path(to_x,to_y,curr_board)
+    def check_path(to_x,to_y,curr_board) #Checks to make sure if the path is clear for the requested move
         x_diff=to_x-@x
         y_diff=to_y-@y
-        puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
+        # puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
         dist = ((x_diff+y_diff)/2).abs
-        puts "dist: #{dist}"
+        
         path = []
-        # for r in @x..to_x
-        #     for c in @y..to_y
-                
-        #         puts "r: #{r} c: #{c} element: #{curr_board[r][c]}"
-        #         path.push(curr_board[r][c])
-        #         puts  "Path: #{path}" 
-                
-        #     end
-        # end
-        x_dir=0
+        
         x_diff>0 ? x_dir=1:x_dir=-1
         y_diff>0 ? y_dir=1:y_dir=-1 
 
         for i in 0..dist
-            # puts "@x+(i*x_diff): #{@x+(i*x_diff)} @y+(i*y_diff): #{@y+(i*y_diff)} "
-            # path.push(curr_board[@x+(i*x_diff)][@y+(i*y_diff)])
-            puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+            
+            #puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
             path.push(curr_board[@x+(i*x_dir)][@y+(i*y_dir)])
 
         end
 
         
-        puts  "Path: #{path}" 
+        # puts  "Path: #{path}" 
         path.shift
         path.pop
-        puts  "Path: #{path}" 
+        # puts  "Path: #{path}" 
         
         return path.all? {|s| s==" "}
         
@@ -188,7 +189,7 @@ class Queen <Game_Piece
         @team=team
     end
 
-    def is_move_allowed(to_x,to_y)
+    def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         x_diff=to_x-@x
@@ -205,6 +206,47 @@ class Queen <Game_Piece
             allowed=false
         end
         return allowed
+    end
+    def check_path(to_x,to_y,curr_board) #Checks to make sure if the path is clear for the requested move
+        
+        x_diff=to_x-@x
+        y_diff=to_y-@y
+        # puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
+        x_dist = (x_diff).abs
+        y_dist = (y_diff).abs
+        
+        path = []
+        dist = ((x_diff+y_diff)/2).abs
+
+        x_diff>0 ? x_dir=1:x_dir=-1
+        y_diff>0 ? y_dir=1:y_dir=-1 
+        
+        if x_diff==0 || y_diff==0
+            for i in 0..x_dist
+                for j in 0..y_dist
+                    # puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+                    path.push(curr_board[@x+(i*x_dir)][@y+(j*y_dir)])
+                end
+
+            end
+        
+        else
+            for i in 0..dist
+                
+                #puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+                path.push(curr_board[@x+(i*x_dir)][@y+(i*y_dir)])
+
+            end
+        end
+
+        
+        #  puts  "Path: #{path}" 
+        path.shift
+        path.pop
+        #  puts  "Path: #{path}" 
+        
+        return path.all? {|s| s==" "}
+        
     end
     def to_s
         if @team=='w'
@@ -226,7 +268,7 @@ class King <Game_Piece
         
     end
 
-    def is_move_allowed(to_x,to_y)
+    def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         x_diff=(to_x-@x).abs
@@ -261,7 +303,7 @@ class Pawn <Game_Piece
         
     end
 
-    def is_move_allowed(to_x,to_y,attack=false,first_move=false)
+    def is_move_allowed(to_x,to_y,attack=false,first_move=false) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         x_diff=(to_x-@x).abs
