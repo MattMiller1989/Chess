@@ -54,6 +54,8 @@ class Rook < Game_Piece
                 path.push(curr_board[r][c])
             end
         end
+        path.shift
+        path.pop
         puts  "Path: #{path}" 
         
         return path.all? {|s| s==" "}
