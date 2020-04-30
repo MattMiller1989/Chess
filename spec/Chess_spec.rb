@@ -48,7 +48,58 @@ describe Game_board do
     before(:each) do
         @test_game=Game_board.new
     end
+    describe "#move_piece" do
+        before(:each) do
+            @my_game=Game_board.new
+            @board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
+            @my_game=Game_board.new(@board)
+           
+        end
+        it "allows a rook to move two spaces" do
+            board= [["8","♜"," ","♝","♛","♚","♝","♞","♜"],
+                    ["7","♟","♟","♟","♟","♟","♟","♟","♟"],
+                    ["6","♞"," "," "," "," "," "," "," "],
+                    ["5"," "," "," "," "," "," "," "," "],
+                    ["4"," "," "," "," "," "," "," "," "],
+                    ["3"," "," "," "," "," "," "," "," "],
+                    ["2","♙","♙","♙","♙","♙","♙","♙","♙"],
+                    ["1","♖","♘","♗","♕","♔","♗","♘","♖"],
+                    [" ","a","b","c","d","e","f","g","h"]]
+            test_move=Move.new("b8a6",@my_game.curr_board)
+            @my_game.move_piece(test_move)
+            @my_game.display_board
+            expect(@my_game.disp_array).to eql board
+        end
+        # it "does not allow move if path is blocked" do
+        #     test_move=Move.new("b5h5",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql false
+        # end
+        # it "Allows Queen move" do
+        #     test_move=Move.new("d8b6",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql true
+        # end
+        # it "Returns false when Queen move is invalid" do
+        #     test_move=Move.new("d8a6",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql false
+        # end
+        # it "Allows double move on first move for pawn" do
+        #     test_move=Move.new("h7h5",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql true
+        # end
+        # it "Checks path for double pawn move" do
+        #     test_move=Move.new("e7e5",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql false
+        # end
+        
 
+    end
     
     describe "#disp_board" do
         it "Turns the 'board' into a 'display board" do

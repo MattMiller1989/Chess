@@ -6,6 +6,7 @@ class Move
         @board=board
 
         @piece = get_piece(input[0..1])
+        #puts "@piece: #{@piece} class: #{@piece.class}"
         @end_point=get_end(input[2..3])
 
         

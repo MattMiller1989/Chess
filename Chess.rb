@@ -1,15 +1,8 @@
 require_relative 'Pieces'
 require_relative 'Move'
 
-class Game_runner
-
-    def initialize
-        my_board=Game_board.new
-                
-    end
 
 
-end
 
 class Game_board
     attr_accessor :curr_board
@@ -75,7 +68,7 @@ class Game_board
         
     end
 
-    def make_move(move_input,board=@curr_board)
+    def make_move(move_input,board=@curr_board) #Creates a move and checks if move is valid for the given piece
         
         my_move=Move.new(move_input,board)
         valid_move=my_move.is_valid
@@ -88,8 +81,19 @@ class Game_board
 
         
     end
-    def move_piece(my_move)
+    def move_piece(my_move) #Updates the curr board display and replays the start point with ' '
+        curr_piece=my_move.piece
+        puts "@curr_piece: #{curr_piece} curr_piece class : #{curr_piece.class}"
+        x_start= curr_piece.x
+        y_start= curr_piece.y
 
+        x_end=my_move.end_point[0]
+        y_end=my_move.end_point[1]
+
+        curr_piece.move(x_end,y_end)
+
+        @curr_board[x_start][y_start]=" "
+        @curr_board[x_end][y_end]=curr_piece
     end
     def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],
@@ -117,7 +121,7 @@ class Game_board
         @disp_array.each_with_index do |n,r|
             
             n.each do |c|
-                print c+" │ "
+                print c+" │ "     #Uses grid lines to make it look nice
             end
             puts "\n────────────────────────────────────"
         end
