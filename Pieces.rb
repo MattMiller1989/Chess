@@ -34,10 +34,33 @@ class Rook < Game_Piece
         if @x==to_x && @y==to_y
             allowed=false
         end
+        # if allowed
+        #     path_clear=check_path(to_x,to_y)
+        # end
+
         
         return allowed
     end
 
+    def check_path(to_x,to_y,curr_board)
+        x_diff=to_x-@x
+        y_diff=to_y-@y
+        
+        dist = (x_diff-y_diff).abs
+        path = []
+        for r in @x..to_x
+            for c in @y..to_y
+                puts "r: #{r} c: #{c} element: #{curr_board[r][c]}"
+                path.push(curr_board[r][c])
+            end
+        end
+        puts  "Path: #{path}" 
+        
+        return path.all? {|s| s==" "}
+        
+    end
+        
+    
     def to_s
         if @team=='w'
             return "♖"

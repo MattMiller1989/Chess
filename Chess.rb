@@ -124,7 +124,7 @@ end
 # my_bish=Bishop.new(4,4)
 # my_bish.is_move_allowed(2,6)
 
-my_board=Game_board.new
+# my_board=Game_board.new
 # my_board.create_pieces
 
-my_board.print_board
+# my_board.print_board

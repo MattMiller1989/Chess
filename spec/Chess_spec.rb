@@ -88,6 +88,23 @@ describe Rook do
             expect(@test_rook.is_move_allowed(4,5)).to eql false
         end
     end
+    describe "#check_path" do
+        it "returns false if path is blocked" do
+            board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," ","♝"," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
+            
+            expect(@test_rook.check_path(5,3,board)).to eql false
+        end
+        # it "returns true if path is clear" do
+
+        # end
+    end
 end
 
 describe Knight do
