@@ -34,9 +34,7 @@ class Rook < Game_Piece
         if @x==to_x && @y==to_y
             allowed=false
         end
-        # if allowed
-        #     path_clear=check_path(to_x,to_y)
-        # end
+       
 
         
         return allowed
@@ -50,13 +48,13 @@ class Rook < Game_Piece
         path = []
         for r in @x..to_x
             for c in @y..to_y
-                puts "r: #{r} c: #{c} element: #{curr_board[r][c]}"
+                
                 path.push(curr_board[r][c])
             end
         end
         path.shift
         path.pop
-        puts  "Path: #{path}" 
+        # puts  "Path: #{path}" 
         
         return path.all? {|s| s==" "}
         
@@ -102,6 +100,12 @@ class Knight <Game_Piece
             return "♞"
         end
     end
+
+    def check_path(to_x,to_y,curr_board)
+        
+        return true
+        
+    end
     
 end
 
@@ -127,6 +131,43 @@ class Bishop <Game_Piece
         end
         
         return allowed
+    end
+    def check_path(to_x,to_y,curr_board)
+        x_diff=to_x-@x
+        y_diff=to_y-@y
+        puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
+        dist = ((x_diff+y_diff)/2).abs
+        puts "dist: #{dist}"
+        path = []
+        # for r in @x..to_x
+        #     for c in @y..to_y
+                
+        #         puts "r: #{r} c: #{c} element: #{curr_board[r][c]}"
+        #         path.push(curr_board[r][c])
+        #         puts  "Path: #{path}" 
+                
+        #     end
+        # end
+        x_dir=0
+        x_diff>0 ? x_dir=1:x_dir=-1
+        y_diff>0 ? y_dir=1:y_dir=-1 
+
+        for i in 0..dist
+            # puts "@x+(i*x_diff): #{@x+(i*x_diff)} @y+(i*y_diff): #{@y+(i*y_diff)} "
+            # path.push(curr_board[@x+(i*x_diff)][@y+(i*y_diff)])
+            puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+            path.push(curr_board[@x+(i*x_dir)][@y+(i*y_dir)])
+
+        end
+
+        
+        puts  "Path: #{path}" 
+        path.shift
+        path.pop
+        puts  "Path: #{path}" 
+        
+        return path.all? {|s| s==" "}
+        
     end
     def to_s
         if @team=='w'

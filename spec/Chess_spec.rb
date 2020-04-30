@@ -193,6 +193,14 @@ end
 describe Bishop do
     before(:each) do
         @test_bish=Bishop.new(4,4)
+            @board=  [[" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," ","♝"," "," "],
+                    [" "," "," ","♝","♝"," "," "," "],
+                    [" "," ","♝"," "," "," ","♝"," "],
+                    [" "," "," "," ","♝"," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "]]
     end
     describe "#is_move_allowed" do
         it "Allows +2 +2" do
@@ -235,6 +243,28 @@ describe Bishop do
 
             expect(@test_bish.is_move_allowed(4,5)).to eql false
         end
+    end
+    describe "#check_path" do
+        # before(:each) do
+        #     board=  [[" "," "," "," "," "," "," "," "],
+        #             [" "," "," "," "," "," "," "," "],
+        #             [" "," "," "," "," ","♝"," "," "],
+        #             [" "," "," ","♝","♝"," "," "," "],
+        #             [" "," ","♝"," "," "," ","♝"," "],
+        #             [" "," "," "," ","♝"," "," "," "],
+        #             [" "," "," "," "," "," "," "," "],
+        #             [" "," "," "," "," "," "," "," "]]
+
+        # end
+        # it "#returns true if the path is clear" do
+        #     expect(@test_bish.check_path(5,5,@board)).to eql true
+
+        # end
+        it "#returns false if the path is obstructed" do
+            expect(@test_bish.check_path(2,2,@board)).to eql false
+
+        end
+        
     end
 end
 
