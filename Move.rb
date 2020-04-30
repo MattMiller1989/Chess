@@ -48,8 +48,7 @@ class Move
         end
 
         return valid
-        
-         
+          
     end
     
 end

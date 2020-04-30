@@ -294,39 +294,54 @@ class King <Game_Piece
 end
 
 class Pawn <Game_Piece
-    attr_accessor :x,:y
+    attr_accessor :x,:y, :first_move
     attr_reader :team
     def initialize(x,y,team=nil)
         @x=x
         @y=y
         @team=team
+        @first_move=true
         
     end
 
-    def is_move_allowed(to_x,to_y,attack=false,first_move=false) #Checks to see if the move is allowed based on the pieces 'rule'
+    def is_move_allowed(to_x,to_y,attack=false) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false
         
         x_diff=(to_x-@x).abs
         y_diff=(to_y-@y).abs
         
-        if first_move
+        if @first_move
             if x_diff==2 && y_diff==0
                 allowed=true
             end
-        else
-            if attack
-                if x_diff==1 && y_diff==1
-                    allowed= true
-                end
-            else
-                if x_diff==1 && y_diff==0
-                    allowed=true
-                end 
-
-            end
         end
+        if attack
+            if x_diff==1 && y_diff==1
+                allowed= true
+            end
+        else
+            if x_diff==1 && y_diff==0
+                allowed=true
+            end 
+
+        end
+        
 
         return allowed
+    end
+    def check_path(to_x,to_y,curr_board)
+        
+        if first_move
+            x_diff=to_x-@x
+            
+            x_diff>0 ? x_dir=1:x_dir=-1
+        
+            path= curr_board[@x+x_dir][@y]
+
+            return path == " "
+        else
+            return true
+        end
     end
     def to_s
         if @team=='w'

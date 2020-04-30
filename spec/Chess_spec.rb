@@ -2,13 +2,13 @@ require_relative '../Chess'
 require_relative '../Pieces'
 
 describe Move do
-    describe "is_valid" do
+    describe "#is_valid" do
         before(:each) do
             # @my_game=Game_board.new
             @board =[[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
                     [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
-                    [" "," "," "," "," "," "," "," "],
-                    [" ","Rb"," "," ","Pb"," "," "," "],
+                    [" "," "," "," ","Pb"," "," "," "],
+                    [" ","Rb"," "," ","Pw"," "," "," "],
                     [" "," "," "," "," "," "," "," "],
                     [" "," "," "," "," "," "," "," "],
                     ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
@@ -16,13 +16,30 @@ describe Move do
             @my_game=Game_board.new(@board)
         end
         it "allows a rook to move two spaces" do
-            test_move=@my_game.make_move("b5d5")
+            test_move=Move.new("b5d5",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         it "does not allow move if path is blocked" do
-            test_move=@my_game.make_move("b5h5")
+            test_move=Move.new("b5h5",@my_game.curr_board)
             expect(test_move.is_valid).to eql false
         end
+        it "Allows Queen move" do
+            test_move=Move.new("d8b6",@my_game.curr_board)
+            expect(test_move.is_valid).to eql true
+        end
+        it "Returns false when Queen move is invalid" do
+            test_move=Move.new("d8a6",@my_game.curr_board)
+            expect(test_move.is_valid).to eql false
+        end
+        it "Allows double move on first move for pawn" do
+            test_move=Move.new("h7h5",@my_game.curr_board)
+            expect(test_move.is_valid).to eql true
+        end
+        it "Checks path for double pawn move" do
+            test_move=Move.new("e7e5",@my_game.curr_board)
+            expect(test_move.is_valid).to eql false
+        end
+        
 
     end
 
@@ -77,28 +94,28 @@ describe Game_board do
         it "Returns the correct piece type of the move" do
 
             
-            test_move=@my_game.make_move("b1a3")
+            test_move=Move.new("b1a3",@test_game.curr_board)
             
             expect((test_move.piece.class)).to eql Knight
         end
         it "Returns the correct display string" do
 
             
-            test_move=@my_game.make_move("h8h6")
+            test_move=Move.new("h8h6",@test_game.curr_board)
             
             expect((test_move.piece.to_s)).to eql "♜"
         end
         it "Returns the correct display string" do
 
             
-            test_move=@my_game.make_move("e7e6")
+            test_move=Move.new("e7e6",@test_game.curr_board)
             
             expect((test_move.piece.to_s)).to eql "♟"
         end
         it "Returns the correct end point for the move " do
 
             
-            test_move=@my_game.make_move("e7e6")
+            test_move=Move.new("e7e6",@test_game.curr_board)
             
             expect((test_move.end_point)).to eql [2,4]
         end
@@ -574,16 +591,16 @@ describe Pawn do
             expect(@test_pawn.is_move_allowed(3,7)).to eql false
         end
         it "Allows +2 +0 on first move" do
-
-            expect(@test_pawn.is_move_allowed(6,4,false,true)).to eql true
+            @test_pawn.first_move=true
+            expect(@test_pawn.is_move_allowed(6,4,false)).to eql true
         end
         it "Allows -2 +0 on first move" do
-
-            expect(@test_pawn.is_move_allowed(2,4,false,true)).to eql true
+            @test_pawn.first_move=true
+            expect(@test_pawn.is_move_allowed(2,4,false)).to eql true
         end
         it "Does not Allows -2 +1 on first move" do
-
-            expect(@test_pawn.is_move_allowed(2,5,false,true)).to eql false
+            @test_pawn.first_move=true
+            expect(@test_pawn.is_move_allowed(2,5,false)).to eql false
         end
 
     end
