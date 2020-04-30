@@ -14,12 +14,14 @@ end
 class Game_board
     attr_accessor :curr_board
     attr_reader   :disp_array
-    def initialize
-        @curr_board=create_board  #Creates the Board
-                     #Creates Game piece objects for the board
-        
+    def initialize(inc_board=nil)
+        if inc_board==nil
+            @curr_board=create_board  #Creates the Board
+        else
+            @curr_board=create_pieces(inc_board) #Creates Game piece objects for the board
+        end
     end
-    def create_board
+    def create_board()
         board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
                 ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
                 [" "," "," "," "," "," "," "," "],
@@ -73,13 +75,14 @@ class Game_board
         
     end
 
-    def make_move(move_input)
-        start=move_input[0..2]
-        go_to=move_input[2..4]
+    def make_move(move_input,board=@curr_board)
+        # start=move_input[0..2]
+        # go_to=move_input[2..4]
        
-        piece=@curr_board[start[0]][start[1]]
+        # piece=@curr_board[start[0]][start[1]]
 
-        my_move=Move.new(piece,go_to,@curr_board)
+        # my_move=Move.new(piece,go_to,@curr_board)
+        my_move=Move.new(move_input,board)
         return my_move
     end
     def display_board      #modifies the gameboard to a 'display-ready' format

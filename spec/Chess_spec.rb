@@ -35,9 +35,45 @@ describe Game_board do
     end
     
     
+    describe "#make_move" do
+        before(:each) do
+            # @my_game=Game_board.new
+            @board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
+            @my_game=Game_board.new(@board)
+        end
+        it "Returns the correct piece type of the move" do
 
+            
+            test_move=@my_game.make_move("b1a3")
+            
+            expect((test_move.piece.class)).to eql Knight
+        end
+        it "Returns the correct display string" do
+
+            
+            test_move=@my_game.make_move("h8h6")
+            
+            expect((test_move.piece.to_s)).to eql "♜"
+        end
+        it "Returns the correct display string" do
+
+            
+            test_move=@my_game.make_move("e7e6")
+            
+            expect((test_move.piece.to_s)).to eql "♟"
+        end
+
+    end
  
 end
+
 
 describe Game_Piece do
     before(:each) do
