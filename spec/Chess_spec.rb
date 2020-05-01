@@ -17,23 +17,33 @@ describe Move do
             @my_game=Game_board.new(@board)
         end
         it "allows a rook to move two spaces" do
-            test_move=Move.new("b5d5",@my_game.curr_board)
+            test_game=Game_board.new
+            # test_move=Move.new("b5d5",@my_game.curr_board)
+            test_move=test_game.make_move("b5d5",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         it "does not allow move if path is blocked" do
-            test_move=Move.new("b5h5",@my_game.curr_board)
+            test_game=Game_board.new
+            # test_move=Move.new("b5h5",@my_game.curr_board)
+            test_move=test_game.make_move("b5h5",@my_game.curr_board)
             expect(test_move.is_valid).to eql false
         end
         it "Allows Queen move" do
-            test_move=Move.new("d8b6",@my_game.curr_board)
+            test_game=Game_board.new
+            # test_move=Move.new("d8b6",@my_game.curr_board)
+            test_move=test_game.make_move("d8b6",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         it "Returns false when Queen move is invalid" do
-            test_move=Move.new("d8a6",@my_game.curr_board)
+            test_game=Game_board.new
+            # test_move=Move.new("d8a6",@my_game.curr_board)
+            test_move=test_game.make_move("d8a6",@my_game.curr_board)
             expect(test_move.is_valid).to eql false
         end
         it "Allows double move on first move for pawn" do
-            test_move=Move.new("h7h5",@my_game.curr_board)
+            test_game=Game_board.new
+            # test_move=Move.new("h7h5",@my_game.curr_board)
+            test_move=test_game.make_move("h7h5",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         # it "Checks path for double pawn move" do
@@ -74,22 +84,26 @@ describe Game_board do
                     ["2","♙","♙","♙","♙","♙","♙","♙","♙"],
                     ["1","♖","♘","♗","♕","♔","♗","♘","♖"],
                     [" ","a","b","c","d","e","f","g","h"]]
-            test_move=Move.new("b8a6",@my_game.curr_board)
+            # test_move=Move.new("b8a6",@my_game.curr_board)
+            test_move=@my_game.make_move("b8a6",@my_game.curr_board)
             @my_game.move_piece(test_move)
             @my_game.display_board
             expect(@my_game.disp_array).to eql board
         end
         
         it "Allows Queen move" do
-            test_move=Move.new("d8b6",@my_game.curr_board)
+            # test_move=Move.new("d8b6",@my_game.curr_board)
+            test_move=@my_game.make_move("d8b6",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         it "Returns false when Queen move is invalid" do
-            test_move=Move.new("d8a6",@my_game.curr_board)
+            # test_move=Move.new("d8a6",@my_game.curr_board)
+            test_move=@my_game.make_move("d8a6",@my_game.curr_board)
             expect(test_move.is_valid).to eql false
         end
         it "Allows double move on first move for pawn" do
-            test_move=Move.new("h7h5",@my_game.curr_board)
+            # test_move=Move.new("h7h5",@my_game.curr_board)
+            test_move=@my_game.make_move("h7h5",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
         # it "Checks path for double pawn move" do
@@ -128,49 +142,7 @@ describe Game_board do
     end
     
     
-    describe "#make_move" do
-        before(:each) do
-            # @my_game=Game_board.new
-            @board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
-                    ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
-                    ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
-            @my_game=Game_board.new(@board)
-        end
-        it "Returns the correct piece type of the move" do
-
-            
-            test_move=Move.new("b1a3",@test_game.curr_board)
-            
-            expect((test_move.piece.class)).to eql Knight
-        end
-        it "Returns the correct display string" do
-
-            
-            test_move=Move.new("h8h6",@test_game.curr_board)
-            
-            expect((test_move.piece.to_s)).to eql "♜"
-        end
-        it "Returns the correct display string" do
-
-            
-            test_move=Move.new("e7e6",@test_game.curr_board)
-            
-            expect((test_move.piece.to_s)).to eql "♟"
-        end
-        it "Returns the correct end point for the move " do
-
-            
-            test_move=Move.new("e7e6",@test_game.curr_board)
-            
-            expect((test_move.end_point)).to eql [2,4]
-        end
-
-    end
+   
     describe "#in_check?" do
         
         it "returns true if a pawn is in attack pos" do
@@ -187,6 +159,36 @@ describe Game_board do
             # puts " "
             # curr_game.print_board
             expect(curr_game.in_check?('w',4,4)).to eql true
+        end
+        it "returns true if a bishop is in attack pos" do
+            test_board=[[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Pb"],
+                        ["Rb"," "," "," "," "," "," "," "],
+                        [" "," "," "," "," ","Pb"," "," "],
+                        [" ","Kw"," "," "," "," "," "," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            curr_game=Game_board.new(test_board)         
+            curr_game.white_king=curr_game.curr_board[4][1]
+            # puts " "
+            # curr_game.print_board
+            expect(curr_game.in_check?('w',4,1)).to eql true
+        end
+        it "returns true if a knight is in attack pos" do
+            test_board=[[" "," ","Bb","Qb","Kb","Bb","Nb","Rb"],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Pb"],
+                        ["Rb"," ","Nb"," "," "," "," "," "],
+                        [" "," "," "," "," ","Pb"," "," "],
+                        [" "," "," ","Kw"," "," "," "," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            curr_game=Game_board.new(test_board)         
+            curr_game.white_king=curr_game.curr_board[4][3]
+            # puts " "
+            # curr_game.print_board
+            expect(curr_game.in_check?('w',4,3)).to eql true
         end
     end
 

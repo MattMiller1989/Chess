@@ -261,12 +261,24 @@ end
 class King <Game_Piece
     attr_accessor :x,:y
     attr_reader :team
+    # attr_reader :poss_moves
     def initialize(x,y,team=nil)
         @x=x
         @y=y
         @team=team
-        
+        # @poss_moves=find_moves
     end
+    # def find_moves
+    #     poss_moves=[]
+        
+    #     for i in -1..1
+    #         for j -1..1
+    #             x_new=@x+i
+    #             y_new=@y+j
+    #             if x_new >=0 && x_new<8 && y_new>=0 && y_new<8
+    #                 if 
+    #             poss_moves.push(@x+i,@y+j)
+    # end
 
     def is_move_allowed(to_x,to_y) #Checks to see if the move is allowed based on the pieces 'rule'
         allowed=false

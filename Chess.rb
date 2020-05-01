@@ -1,5 +1,6 @@
 require_relative 'Pieces'
 require_relative 'Move'
+require_relative 'Square'
 
 
 
@@ -69,13 +70,27 @@ class Game_board
         
         
     end
+    def convert_to_grid_form(loc_string)
+        x= loc_string[1].to_i
+        y= loc_string[0]
+
+        letters =['a','b','c','d','e','f','g','h']
+        x=8-x
+        y=letters.index(y)
+        
+        
+        return  Square.new(x,y)
+         
+    end
 
     def make_move(move_input,board=@curr_board) #Creates a move and checks if move is valid for the given piece
-        
-        my_move=Move.new(move_input,board)
+        start_square=convert_to_grid_form(move_input[0..1])
+        stop_square=convert_to_grid_form(move_input[2..3])
+        # my_move=Move.new(move_input,board)
+        my_move=Move.new(start_square,stop_square,board)
         if my_move.piece.is_a? Pawn
             if can_capture(my_move)
-                my_move=Move.new(move_input,board,true)
+                my_move=Move.new(start_square,stop_square,board,true)
             end
         end
        
@@ -90,8 +105,8 @@ class Game_board
         x_start= curr_piece.x
         y_start= curr_piece.y
 
-        x_end=my_move.end_point[0]
-        y_end=my_move.end_point[1]
+        x_end=my_move.end_square.x
+        y_end=my_move.end_square.y
 
         if curr_piece.is_a? Pawn 
             if (x_end-x_start).abs==2
@@ -107,8 +122,8 @@ class Game_board
     def is_capture(my_move)
         curr_piece=my_move.piece
 
-        x_end=my_move.end_point[0]
-        y_end=my_move.end_point[1]
+        x_end=my_move.end_square.x
+        y_end=my_move.end_square.y
 
         stop_square=@curr_board[x_end][y_end]
 
@@ -125,8 +140,8 @@ class Game_board
             puts "Can Capture with move : #{my_move}"
             curr_piece=my_move.piece
 
-            x_end=my_move.end_point[0]
-            y_end=my_move.end_point[1]
+            x_end=my_move.end_square.x
+            y_end=my_move.end_square.y
 
             stop_square=@curr_board[x_end][y_end]
     
@@ -152,7 +167,7 @@ class Game_board
                 if e != " "
                     
                     if e.team != curr_team
-                        puts " r: #{r} c: #{c} e: #{e} class: #{e.class}"
+                        # puts " r: #{r} c: #{c} e: #{e} class: #{e.class}"
                         piece_arr.push(e)
                     end
 
@@ -182,6 +197,17 @@ class Game_board
         return check
 
     end
+    # def check_mate?(curr_team,x,y)
+        
+    #     if in_check(curr_team,x+1,y+1)
+    #     if in_check(curr_team,x+1,y+1)
+    #     if in_check(curr_team,x+1,y+1)
+    #     if in_check(curr_team,x+1,y+1)
+    #     if in_check(curr_team,x+1,y+1)
+    #     if in_check(curr_team,x+1,y+1)
+
+        
+    # end
 
     def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],
