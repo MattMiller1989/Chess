@@ -71,11 +71,12 @@ class Game_board
     def make_move(move_input,board=@curr_board) #Creates a move and checks if move is valid for the given piece
         
         my_move=Move.new(move_input,board)
-        # valid_move=my_move.is_valid
-
-        # if valid_move
-        #     move_piece(my_move)
-        # end
+        if my_move.piece.is_a? Pawn
+            if can_capture(my_move)
+                my_move=Move.new(move_input,board,true)
+            end
+        end
+       
         
         return my_move
 
@@ -94,6 +95,44 @@ class Game_board
 
         @curr_board[x_start][y_start]=" "
         @curr_board[x_end][y_end]=curr_piece
+    end
+    def is_capture(my_move)
+        curr_piece=my_move.piece
+
+        x_end=my_move.end_point[0]
+        y_end=my_move.end_point[1]
+
+        stop_square=@curr_board[x_end][y_end]
+
+        if stop_square==' '
+            return false
+        else
+            return true
+        end
+
+    end
+
+    def can_capture(my_move)
+        if is_capture(my_move)
+            puts "Can Capture with move : #{my_move}"
+            curr_piece=my_move.piece
+
+            x_end=my_move.end_point[0]
+            y_end=my_move.end_point[1]
+
+            stop_square=@curr_board[x_end][y_end]
+    
+            cap_team=stop_square.team 
+            if curr_piece.team==cap_team
+                return false
+            else
+                return true
+            end
+        else
+            return false
+        end
+        
+        
     end
     def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],

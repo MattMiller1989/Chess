@@ -39,26 +39,35 @@ class Game_runner
             while ! valid_move
                 puts "team #{team} please enter your first move: "
                 move_in=gets.chomp
-                # valid_move=white_in.match(/^([a-h][1-8]){2}$/)
+                
                 
                 if move_in.match(/^([a-h][1-8]){2}$/) != nil
                     valid_in=true
                 else
                     valid_in=false
                 end
-                
-                puts "valid_in: #{valid_in}"
+                 
                 if valid_in
                     
                     curr_move=@my_board.make_move(move_in)
-                    puts "#{curr_move.is_valid} #{curr_move.piece.team}"
+                    puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
+                    if @my_board.is_capture(curr_move)
+                        valid_move=@my_board.can_capture(curr_move)
+                    end
+                   
                     
                     if curr_move.is_valid && curr_move.piece.team == team[0]
-                        puts "#{curr_move.is_valid} #{curr_move.piece.team}"
+                       
                         valid_move=true
                     end
+                    # if valid_move
+                    # if @my_board.is_capture(curr_move)
+                    #     valid_move=can_capture(curr_move)
+                    # end
+                     puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
+                    # end
                 end
-                puts "valid_move: #{valid_move}"
+               
                 @move_list.push(curr_move)
 
             end

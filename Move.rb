@@ -2,12 +2,13 @@ class Move
     attr_reader :piece, :end_point
 
     
-    def initialize(input,board)
+    def initialize(input,board,attack=false)
         @board=board
         @input=input
         @piece = get_piece(input[0..1])
         #puts "@piece: #{@piece} class: #{@piece.class}"
         @end_point=get_end(input[2..3])
+        @attack=attack
 
         
     end
@@ -40,16 +41,24 @@ class Move
         return [x,y]
     end
     def is_valid
-        x=@end_point[0]
-        y=@end_point[1]
-        valid=false
-        
-        if @piece.is_move_allowed(x,y) && @piece.check_path(x,y,@board)
-            valid=true
-        end
+        if @piece !=nil
+            x=@end_point[0]
+            y=@end_point[1]
+            valid=false
+            attack=@attack
+            if @piece.is_a? Pawn
+                if @piece.is_move_allowed(x,y,attack)
+                    valid =true
+                end
 
-        return valid
-          
+            elsif @piece.is_move_allowed(x,y) && @piece.check_path(x,y,@board)
+                valid=true
+            end
+
+            return valid
+        else
+            return false
+        end
     end
     def to_s
         if @piece.team =='w'
