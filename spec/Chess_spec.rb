@@ -192,35 +192,30 @@ describe Game_board do
         end
     end
 
+    describe "#check_mate?" do
+
+        it "returns true if a pawn is in attack pos" do
+            test_board=[[" ","Nb","Bb","Qb","Kb","Bb","Nb"," "],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Pb"],
+                        ["Rb"," "," ","Kw"," "," "," "," "],
+                        [" "," "," ","Pb"," "," ","Rb"," "],
+                        [" "," "," "," "," "," "," "," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+        curr_game=Game_board.new(test_board)         
+        curr_game.white_king=curr_game.curr_board[2][3]
+        # puts " "
+        # curr_game.print_board
+        expect(curr_game.check_mate?('w',2,3)).to eql true
+
+        end
+
+    end
+
 end
 
 
-# describe Game_Piece do
-#     before(:each) do
-#         @test_piece=Game_Piece.new(1,3)
-#     end
-
-#     describe "#move" do
-#         it "returns a new location for the given piece" do
-#             board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
-#                     ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
-#                     [" "," "," "," "," "," "," "," "],
-#                     [" "," "," "," "," "," "," "," "],
-#                     [" "," "," "," "," "," "," "," "],
-#                     [" "," "," "," "," "," "," "," "],
-#                     ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
-#                     ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
-            
-#             @test_piece.move(4,5)
-#             expect(@test_piece.x).to eql 4
-#             expect(@test_piece.y).to eql 5
-
-#         end
-
-#     end
-    
-
-# end
 
 describe Rook do
     before(:each) do

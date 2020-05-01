@@ -191,23 +191,49 @@ class Game_board
                 check=true
             end
 
-            puts " n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+            # puts " n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
         end
 
         return check
 
     end
-    # def check_mate?(curr_team,x,y)
+    def check_mate?(curr_team,x,y)
         
-    #     if in_check(curr_team,x+1,y+1)
-    #     if in_check(curr_team,x+1,y+1)
-    #     if in_check(curr_team,x+1,y+1)
-    #     if in_check(curr_team,x+1,y+1)
-    #     if in_check(curr_team,x+1,y+1)
-    #     if in_check(curr_team,x+1,y+1)
+        start_square=Square.new(x,y)
+        end_squares=[]
+
+        for i in -1..1
+            for j in -1..1
+                if !(i==0 && j==0)
+                    curr_square=Square.new(x+i,y+j)
+                    end_squares.push(curr_square)
+                end
+            end
+        end
+        valid_moves=[]
+        end_squares.each do |m|
+            puts "m: #{m} class: #{m.class} x: #{m.x} y: #{m.y}"
+            puts "start_square: #{start_square}"
+            curr_move=Move.new(start_square,m,@curr_board)
+            # puts curr_move
+
+            if curr_move.is_valid
+                valid_moves.push(m)
+            end
+
+        end
+
+        can_move=valid_moves.any? {|vm| check_mate?(curr_team,vm.x,vm.y)}
+
+        if can_move
+            return false
+        else
+            return true
+        end
+        
 
         
-    # end
+    end
 
     def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],
