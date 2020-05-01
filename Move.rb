@@ -4,7 +4,7 @@ class Move
     
     def initialize(input,board)
         @board=board
-
+        @input=input
         @piece = get_piece(input[0..1])
         #puts "@piece: #{@piece} class: #{@piece.class}"
         @end_point=get_end(input[2..3])
@@ -52,7 +52,12 @@ class Move
           
     end
     def to_s
-        return "#{@piece.team} #{@piece.class} moved from #{input[0..1]} to #{input[2..3]}"
+        if @piece.team =='w'
+            color='white'
+        else
+            color='black'
+        end
+        return "#{color} #{@piece.class} moved from #{@input[0..1]} to #{@input[2..3]}"
     end
     
 end
