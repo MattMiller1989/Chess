@@ -1,5 +1,6 @@
 require_relative '../Chess'
 require_relative '../Pieces'
+require_relative '../Game_runner'
 
 describe Move do
     describe "#is_valid" do
@@ -35,15 +36,16 @@ describe Move do
             test_move=Move.new("h7h5",@my_game.curr_board)
             expect(test_move.is_valid).to eql true
         end
-        it "Checks path for double pawn move" do
-            test_move=Move.new("e7e5",@my_game.curr_board)
-            expect(test_move.is_valid).to eql false
-        end
+        # it "Checks path for double pawn move" do
+        #     test_move=Move.new("e7e5",@my_game.curr_board)
+        #     expect(test_move.is_valid).to eql false
+        # end
         
 
     end
 
 end
+
 describe Game_board do
     before(:each) do
         @test_game=Game_board.new
@@ -77,22 +79,19 @@ describe Game_board do
             @my_game.display_board
             expect(@my_game.disp_array).to eql board
         end
-        # it "does not allow move if path is blocked" do
-        #     test_move=Move.new("b5h5",@my_game.curr_board)
-        #     expect(test_move.is_valid).to eql false
-        # end
-        # it "Allows Queen move" do
-        #     test_move=Move.new("d8b6",@my_game.curr_board)
-        #     expect(test_move.is_valid).to eql true
-        # end
-        # it "Returns false when Queen move is invalid" do
-        #     test_move=Move.new("d8a6",@my_game.curr_board)
-        #     expect(test_move.is_valid).to eql false
-        # end
-        # it "Allows double move on first move for pawn" do
-        #     test_move=Move.new("h7h5",@my_game.curr_board)
-        #     expect(test_move.is_valid).to eql true
-        # end
+        
+        it "Allows Queen move" do
+            test_move=Move.new("d8b6",@my_game.curr_board)
+            expect(test_move.is_valid).to eql true
+        end
+        it "Returns false when Queen move is invalid" do
+            test_move=Move.new("d8a6",@my_game.curr_board)
+            expect(test_move.is_valid).to eql false
+        end
+        it "Allows double move on first move for pawn" do
+            test_move=Move.new("h7h5",@my_game.curr_board)
+            expect(test_move.is_valid).to eql true
+        end
         # it "Checks path for double pawn move" do
         #     test_move=Move.new("e7e5",@my_game.curr_board)
         #     expect(test_move.is_valid).to eql false
@@ -172,37 +171,54 @@ describe Game_board do
         end
 
     end
- 
+    describe "#in_check?" do
+        
+        it "returns true if a pawn is in attack pos" do
+            test_board=[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Pb"],
+                        [" "," "," "," "," "," "," "," "],
+                        [" "," "," "," "," ","Pb"," "," "],
+                        [" "," "," "," ","Kw"," "," "," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            curr_game=Game_board.new(test_board)         
+            curr_game.white_king=curr_game.curr_board[4][4]
+            # puts " "
+            # curr_game.print_board
+            expect(curr_game.in_check?('w',4,4)).to eql true
+        end
+    end
+
 end
 
 
+# describe Game_Piece do
+#     before(:each) do
+#         @test_piece=Game_Piece.new(1,3)
+#     end
 
-describe Game_Piece do
-    before(:each) do
-        @test_piece=Game_Piece.new(1,3)
-    end
-
-    describe "#move" do
-        it "returns a new location for the given piece" do
-            board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
-                    ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    [" "," "," "," "," "," "," "," "],
-                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
-                    ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
+#     describe "#move" do
+#         it "returns a new location for the given piece" do
+#             board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+#                     ["Pb","Pb","Pb","Pb","Pb","Pb","Pb","Pb"],
+#                     [" "," "," "," "," "," "," "," "],
+#                     [" "," "," "," "," "," "," "," "],
+#                     [" "," "," "," "," "," "," "," "],
+#                     [" "," "," "," "," "," "," "," "],
+#                     ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+#                     ["Rw","Nw","Bw","Qw","Kw","Bw","Nw","Rw"]]
             
-            @test_piece.move(4,5)
-            expect(@test_piece.x).to eql 4
-            expect(@test_piece.y).to eql 5
+#             @test_piece.move(4,5)
+#             expect(@test_piece.x).to eql 4
+#             expect(@test_piece.y).to eql 5
 
-        end
+#         end
 
-    end
+#     end
     
 
-end
+# end
 
 describe Rook do
     before(:each) do

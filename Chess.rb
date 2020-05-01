@@ -143,15 +143,43 @@ class Game_board
         
     end
 
-    def in_check?(team)
+    def in_check?(curr_team,x,y)
+        piece_arr=[]
 
         @curr_board.each_with_index do |row,r|
             row.each_with_index do |e,c|
+                
                 if e != " "
                     
+                    if e.team != curr_team
+                        puts " r: #{r} c: #{c} e: #{e} class: #{e.class}"
+                        piece_arr.push(e)
+                    end
+
                 end
             end
         end
+
+        # check=piece_arr.any? { |n| n.is_move_allowed(x,y) && n.check_path(x,y,@curr_board)}
+        check =false
+        piece_arr.each do |n|
+           
+            
+            
+            if n.is_a? Pawn
+                is_allowed=n.is_move_allowed(x,y,true)
+            else
+                is_allowed=n.is_move_allowed(x,y)
+            end
+            
+            if is_allowed && n.check_path(x,y,@curr_board)
+                check=true
+            end
+
+            puts " n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+        end
+
+        return check
 
     end
 

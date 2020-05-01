@@ -299,6 +299,7 @@ end
 class Pawn <Game_Piece
     attr_accessor :x,:y, :first_move
     attr_reader :team
+    
     def initialize(x,y,team=nil)
         @x=x
         @y=y

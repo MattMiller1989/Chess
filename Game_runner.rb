@@ -20,17 +20,27 @@ class Game_runner
 
             curr_move=get_move(turn)
                  
+            if turn== 'white'
+                curr_king=@my_board.white_king
+            else
+                curr_king=@my_board.black_king
+            end
+
+            check=@my_board.in_check?(turn[0],curr_king.x,curr_king.y)
+            puts "check #{check}"
+            
             @my_board.move_piece(curr_move)
             @my_board.print_board
             puts @move_list.last
+
+
             if turn== 'white'
                 turn= 'black'
             else
                 turn= 'white'
             end
-
-            puts "#{@my_board.black_king.x} #{@my_board.black_king.y} " 
-            puts "#{@my_board.white_king.x} #{@my_board.white_king.y} " 
+ 
+            
         end
 
 
@@ -85,4 +95,4 @@ class Game_runner
     end
 end
 
-my_game=Game_runner.new
+# my_game=Game_runner.new
