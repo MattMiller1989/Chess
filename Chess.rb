@@ -71,13 +71,13 @@ class Game_board
     def make_move(move_input,board=@curr_board) #Creates a move and checks if move is valid for the given piece
         
         my_move=Move.new(move_input,board)
-        valid_move=my_move.is_valid
+        # valid_move=my_move.is_valid
 
-        if valid_move
-            move_piece(my_move)
-        end
+        # if valid_move
+        #     move_piece(my_move)
+        # end
         
-        return valid_move
+        return my_move
 
         
     end

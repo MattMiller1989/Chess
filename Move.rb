@@ -51,5 +51,8 @@ class Move
         return valid
           
     end
+    def to_s
+        return "#{@piece.team} #{@piece.class} moved from #{input[0..1]} to #{input[2..3]}"
+    end
     
 end
