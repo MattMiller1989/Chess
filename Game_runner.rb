@@ -16,14 +16,19 @@ class Game_runner
         @my_board.print_board
         puts "Let's Play Chess!! Here are some examples of valid inputs: a2a4 a5a2 b4h2"
 
-        white_move=get_move(turn)
-        
+        while !game_over
 
-            
-        
-        @my_board.move_piece(white_move)
-        @my_board.print_board
-        puts @move_list.last
+            curr_move=get_move(turn)
+                 
+            @my_board.move_piece(curr_move)
+            @my_board.print_board
+            puts @move_list.last
+            if turn== 'white'
+                turn= 'black'
+            else
+                turn= 'white'
+            end
+        end
 
 
 
