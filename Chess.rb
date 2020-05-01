@@ -91,6 +91,12 @@ class Game_board
         x_end=my_move.end_point[0]
         y_end=my_move.end_point[1]
 
+        if curr_piece.is_a? Pawn 
+            if (x_end-x_start).abs==2
+                curr_piece.first_move=false
+            end
+        end
+
         curr_piece.move(x_end,y_end)
 
         @curr_board[x_start][y_start]=" "

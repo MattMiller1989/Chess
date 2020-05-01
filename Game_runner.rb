@@ -50,28 +50,34 @@ class Game_runner
                 if valid_in
                     
                     curr_move=@my_board.make_move(move_in)
-                    puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
-                    if @my_board.is_capture(curr_move)
-                        valid_move=@my_board.can_capture(curr_move)
-                    end
+                    valid_move=check_move(curr_move,team)
                    
-                    
-                    if curr_move.is_valid && curr_move.piece.team == team[0]
-                       
-                        valid_move=true
-                    end
-                    # if valid_move
-                    # if @my_board.is_capture(curr_move)
-                    #     valid_move=can_capture(curr_move)
-                    # end
-                     puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
-                    # end
                 end
                
-                @move_list.push(curr_move)
+                
 
             end
+            @move_list.push(curr_move)
             return curr_move
+        
+    end
+    def check_move(curr_move,team)
+        valid_move =false
+        if curr_move.piece==" "
+            return false
+        end
+        if @my_board.is_capture(curr_move)
+            valid_move=@my_board.can_capture(curr_move)
+        end
+       
+        
+        if curr_move.is_valid && curr_move.piece.team == team[0]
+           
+            valid_move=true
+        end
+        
+         puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
+         return valid_move
         
     end
 end
