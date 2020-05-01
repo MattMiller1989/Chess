@@ -5,7 +5,7 @@ require_relative 'Move'
 
 
 class Game_board
-    attr_accessor :curr_board
+    attr_accessor :curr_board, :black_king, :white_king
     attr_reader   :disp_array
     def initialize(inc_board=nil)
         if inc_board==nil
@@ -13,6 +13,8 @@ class Game_board
         else
             @curr_board=create_pieces(inc_board) #Creates Game piece objects for the board
         end
+        @black_king=@curr_board[0][4]
+        @white_king=@curr_board[7][4]
     end
     def create_board()
         board =[["Rb","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
@@ -97,7 +99,7 @@ class Game_board
             end
         end
 
-        curr_piece.move(x_end,y_end)
+        curr_piece.x,curr_piece.y=x_end,y_end
 
         @curr_board[x_start][y_start]=" "
         @curr_board[x_end][y_end]=curr_piece
@@ -140,6 +142,19 @@ class Game_board
         
         
     end
+
+    def in_check?(team)
+
+        @curr_board.each_with_index do |row,r|
+            row.each_with_index do |e,c|
+                if e != " "
+                    
+                end
+            end
+        end
+
+    end
+
     def display_board      #modifies the gameboard to a 'display-ready' format
         @disp_array=[["8"," "," "," "," "," "," "," "," "],
                     ["7"," "," "," "," "," "," "," "," "],

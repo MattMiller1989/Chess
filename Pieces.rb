@@ -1,17 +1,17 @@
 class Game_Piece
-    attr_accessor :x,:y
-    attr_reader :move_tree
-    def initialize(x,y)
-        @x=x
-        @y=y
+    # attr_accessor :x,:y
+    # attr_reader :move_tree
+    # def initialize(x,y)
+    #     @x=x
+    #     @y=y
 
-    end
+    # end
     
-    def move(to_x,to_y)
-        @x=to_x
-        @y=to_y
+    # def move(to_x,to_y)
+    #     @x=to_x
+    #     @y=to_y
         
-    end
+    # end
 end
 
 
@@ -282,6 +282,9 @@ class King <Game_Piece
         end
 
         return allowed
+    end
+    def check_path(to_x,to_y,curr_board)
+        return true
     end
     def to_s
         if @team=='w'

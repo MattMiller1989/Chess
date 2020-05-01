@@ -28,6 +28,9 @@ class Game_runner
             else
                 turn= 'white'
             end
+
+            puts "#{@my_board.black_king.x} #{@my_board.black_king.y} " 
+            puts "#{@my_board.white_king.x} #{@my_board.white_king.y} " 
         end
 
 
