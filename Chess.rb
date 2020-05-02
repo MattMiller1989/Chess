@@ -137,23 +137,31 @@ class Game_board
 
     def can_capture(my_move)
         if is_capture(my_move)
-            # puts "Can Capture with move : #{my_move}"
             curr_piece=my_move.piece
 
             x_end=my_move.end_square.x
             y_end=my_move.end_square.y
-
             stop_square=@curr_board[x_end][y_end]
-            puts "stop_square: #{stop_square} x_end: #{x_end} y_end: #{y_end}"
             cap_team=stop_square.team 
+
+            if my_move.piece.is_a? Pawn
+                if my_move.end_square.y == my_move.start_square.y
+                    return false
+                end
+            end
+            
+            
+           
+            
             if curr_piece.team==cap_team
                 return false
             else
                 return true
             end
-        else
-            return false
+            
+            
         end
+        return false
         
         
     end

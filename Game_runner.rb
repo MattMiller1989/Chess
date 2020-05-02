@@ -15,42 +15,49 @@ class Game_runner
         game_over=false
         @my_board.print_board
         puts "Let's Play Chess!! Here are some examples of valid inputs: a2a4 a5a2 b4h2"
-
+        
+        check =false
+        
         while !game_over
 
-            curr_move=get_move(turn)
-                 
-            if turn== 'white'
-                curr_king=@my_board.white_king
-            else
-                curr_king=@my_board.black_king
-            end
+                #  if turn== 'white'
+                #     curr_king=@my_board.white_king
+                # else
+                #     curr_king=@my_board.black_king
+                # end
 
-            check=@my_board.in_check?(turn[0],curr_king.x,curr_king.y)
-            puts "check #{check}"
+                curr_move=get_move(turn)
+
+                # check=@my_board.in_check?(turn[0],curr_king.x,curr_king.y)
+
+                # puts "check #{check}"
+                # while check
+                #     puts "You are in check!!"
+                    
+                # check=@my_board.in_check?(turn[0],curr_king.x,curr_king.y)
+               
+                
+                
             
-            @my_board.move_piece(curr_move)
-            @my_board.print_board
-            puts @move_list.last
+                
+                @my_board.move_piece(curr_move)
+                @my_board.print_board
+                puts @move_list.last
 
 
-            if turn== 'white'
-                turn= 'black'
-            else
-                turn= 'white'
-            end
- 
-            
+                if turn== 'white'
+                    turn= 'black'
+                else
+                    turn= 'white'
+                end
+                
         end
-
-
-
 
     end
     def get_move(team)
             valid_move=false
             while ! valid_move
-                puts "team #{team} please enter your first move: "
+                puts "team #{team} please enter your move: "
                 move_in=gets.chomp
                 
                 
@@ -81,6 +88,9 @@ class Game_runner
         end
         if @my_board.is_capture(curr_move)
             valid_move=@my_board.can_capture(curr_move)
+            if !valid_move
+                return false
+            end
         end
        
         
@@ -89,10 +99,40 @@ class Game_runner
             valid_move=true
         end
         
-         puts "is_capture: #{@my_board.is_capture(curr_move)} valid_move: #{valid_move}"
-         return valid_move
+        if move_into_check?(curr_move,team)
+            valid_move=false
+        end
+         
+        return valid_move
         
+    end
+    def move_into_check?(my_move,curr_team)
+        curr_piece=my_move.piece
+        if curr_piece.is_a? King 
+            x_end=my_move.end_square.x
+            y_end=my_move.end_square.y
+            
+            check = @my_board.in_check?(curr_team[0],x_end,y_end)
+            
+        else
+            if curr_team== 'white'
+                curr_king=@my_board.white_king
+            else
+                curr_king=@my_board.black_king
+            end
+
+                check=@my_board.in_check?(curr_team[0],curr_king.x,curr_king.y)
+                
+                
+        end
+        
+        if check
+            puts "You cannot move into check!!1!!"
+        end
+
+        return check
+
     end
 end
 
-# my_game=Game_runner.new
+my_game=Game_runner.new

@@ -5,6 +5,9 @@ class Square
     end
 
     def to_s
-        return "x: #{x}, y: #{y}"
+        x=8-@x
+        letters =['a','b','c','d','e','f','g','h']
+        y=letters[@y]
+        return "#{y}#{x}"
     end
 end
