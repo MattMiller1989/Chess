@@ -101,7 +101,7 @@ class Game_board
     end
     def move_piece(my_move) #Updates the curr board display and replays the start point with ' '
         curr_piece=my_move.piece
-        puts "@curr_piece: #{curr_piece} curr_piece class : #{curr_piece.class}"
+        # puts "@curr_piece: #{curr_piece} curr_piece class : #{curr_piece.class}"
         x_start= curr_piece.x
         y_start= curr_piece.y
 
@@ -198,10 +198,10 @@ class Game_board
 
     end
     def check_mate?(curr_team,x,y)
-        
+        puts "x: #{x} y: #{y}"
         start_square=Square.new(x,y)
         end_squares=[]
-
+        puts "start_square: #{start_square}"
         for i in -1..1
             for j in -1..1
                 if !(i==0 && j==0)
@@ -212,8 +212,8 @@ class Game_board
         end
         valid_moves=[]
         end_squares.each do |m|
-            puts "m: #{m} class: #{m.class} x: #{m.x} y: #{m.y}"
-            puts "start_square: #{start_square}"
+            # puts "m: #{m} class: #{m.class} x: #{m.x} y: #{m.y}"
+            #  puts "start_square: #{start_square}"
             curr_move=Move.new(start_square,m,@curr_board)
             # puts curr_move
 
@@ -222,8 +222,11 @@ class Game_board
             end
 
         end
-
-        can_move=valid_moves.any? {|vm| check_mate?(curr_team,vm.x,vm.y)}
+        puts valid_moves
+        valid_moves.each do |n|
+            puts in_check?(curr_team,n.x,n.y)
+        end
+        can_move=valid_moves.any? {|vm| !in_check?(curr_team,vm.x,vm.y)}
 
         if can_move
             return false
