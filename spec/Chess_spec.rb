@@ -210,7 +210,7 @@ describe Game_board do
         expect(curr_game.check_mate?('w',2,3)).to eql true
 
         end
-        it "returns true if a pawn is in attack pos" do
+        it "returns false if there is an escape move" do
             test_board=[[" ","Nb","Bb","Qb","Kb","Bb","Nb"," "],
                         ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Pb"],
                         ["Rb"," "," "," "," "," "," "," "],
@@ -224,6 +224,54 @@ describe Game_board do
         # puts " "
         # curr_game.print_board
         expect(curr_game.check_mate?('w',4,5)).to eql false
+
+        end
+        it "returns false if king can 'attack' out of a checkmate" do
+            test_board=[[" ","Nb","Bb"," ","Kb","Bb","Nb"," "],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Qb"],
+                        [" "," "," "," "," ","Rb"," "," "],
+                        ["Pb"," "," ","Pb"," "," ","Rb"," "],
+                        [" "," "," "," "," "," ","Kw"," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+        curr_game=Game_board.new(test_board)         
+        curr_game.white_king=curr_game.curr_board[4][6]
+        # puts " "
+        # curr_game.print_board
+        expect(curr_game.check_mate?('w',4,6)).to eql false
+
+         end
+         it "returns false if king can 'attack' out of a checkmate" do
+            test_board=[[" ","Nb","Bb"," ","Kb","Bb","Nb"," "],
+                        ["Pb","Pb","Pb","Pb"," ","Pb","Pb","Qb"],
+                        [" "," "," "," "," ","Rb"," "," "],
+                        ["Pb"," "," ","Pb"," "," ","Kw"," "],
+                        [" "," "," "," "," "," "," "," "],
+                        [" "," "," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+        curr_game=Game_board.new(test_board)         
+        curr_game.white_king=curr_game.curr_board[3][6]
+        # puts " "
+        # curr_game.print_board
+        expect(curr_game.in_check?('w',3,6)).to eql false
+
+         end
+        it "returns true if moving into a pawns attack path" do
+            test_board=[[" ","Nb","Bb"," ","Kb","Bb","Nb"," "],
+                        ["Pb","Pb","Pb","Pb"," "," ","Pb"," "],
+                        [" "," "," "," "," ","Rb","Pb"," "],
+                        ["Pb"," "," ","Pb"," "," ","Pw"," "],
+                        [" "," ","Rb"," "," "," ","Kw"," "],
+                        [" ","Qb"," "," "," "," "," "," "],
+                        ["Pw","Pw","Pw","Pw","Pw"," ","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+        curr_game=Game_board.new(test_board)         
+        curr_game.white_king=curr_game.curr_board[4][6]
+        # puts " "
+        # curr_game.print_board
+        expect(curr_game.check_mate?('w',4,6)).to eql true
 
         end
 

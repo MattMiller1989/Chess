@@ -137,7 +137,7 @@ class Game_board
 
     def can_capture(my_move)
         if is_capture(my_move)
-            puts "Can Capture with move : #{my_move}"
+            # puts "Can Capture with move : #{my_move}"
             curr_piece=my_move.piece
 
             x_end=my_move.end_square.x
@@ -158,7 +158,7 @@ class Game_board
         
     end
 
-    def in_check?(curr_team,x,y)
+    def in_check?(curr_team,x,y,check_mate_test=false)
         piece_arr=[]
 
         @curr_board.each_with_index do |row,r|
@@ -182,7 +182,14 @@ class Game_board
             
             
             if n.is_a? Pawn
-                is_allowed=n.is_move_allowed(x,y,true)
+                if (n.y-y).abs==1
+                    
+                    is_allowed=n.is_move_allowed(x,y,true)
+                    puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+                else
+                    is_allowed=false
+                end
+                # puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
             else
                 is_allowed=n.is_move_allowed(x,y)
             end
@@ -191,17 +198,17 @@ class Game_board
                 check=true
             end
 
-            # puts " n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+            #   puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
         end
 
         return check
 
     end
     def check_mate?(curr_team,x,y)
-        puts "x: #{x} y: #{y}"
+        # puts "x: #{x} y: #{y}"
         start_square=Square.new(x,y)
         end_squares=[]
-        puts "start_square: #{start_square}"
+        # puts "start_square: #{start_square}"
         for i in -1..1
             for j in -1..1
                 if !(i==0 && j==0)
@@ -212,27 +219,40 @@ class Game_board
         end
         valid_moves=[]
         end_squares.each do |m|
-            # puts "m: #{m} class: #{m.class} x: #{m.x} y: #{m.y}"
-            #  puts "start_square: #{start_square}"
+            #  puts "m: #{m} class: #{m.class} x: #{m.x} y: #{m.y}"
+            #   puts "start_square: #{start_square}"
             curr_move=Move.new(start_square,m,@curr_board)
             # puts curr_move
 
             if curr_move.is_valid
-                valid_moves.push(m)
+                
+                if @curr_board[curr_move.end_square.x][curr_move.end_square.y]!=" "
+                    
+                    if can_capture(curr_move)
+                         puts "cap"
+                        valid_moves.push(m)
+                   end
+
+                else             
+                    valid_moves.push(m)
+                end
             end
 
         end
-        puts valid_moves
+        # puts valid_moves
+        temp=@curr_board[x][y]
+        @curr_board[x][y]=" "
         valid_moves.each do |n|
-            puts in_check?(curr_team,n.x,n.y)
+            #   puts "#{in_check?(curr_team,n.x,n.y)} #{n.x} #{n.y}"
         end
         can_move=valid_moves.any? {|vm| !in_check?(curr_team,vm.x,vm.y)}
-
+        @curr_board[x][y]=temp
         if can_move
             return false
         else
             return true
         end
+
         
 
         

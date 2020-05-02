@@ -346,7 +346,9 @@ class Pawn <Game_Piece
         return allowed
     end
     def check_path(to_x,to_y,curr_board)
-        
+        if (to_y-@y).abs==1
+            return true
+        end
         if first_move
             x_diff=to_x-@x
             
