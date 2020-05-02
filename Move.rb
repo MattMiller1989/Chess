@@ -25,9 +25,15 @@ class Move
     end
     
     def is_valid
+        x=@end_square.x
+        y=@end_square.y
+
+        if !(x.between?(0,7)&&y.between?(0,7))
+            return false
+        end
+        
         if @piece !=nil
-            x=@end_square.x
-            y=@end_square.y
+            
             valid=false
             attack=@attack
             if @piece.is_a? Pawn

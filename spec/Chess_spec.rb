@@ -274,6 +274,22 @@ describe Game_board do
         expect(curr_game.check_mate?('w',4,6)).to eql true
 
         end
+        it "edge case 1" do
+            test_board=[[" ","Nb","Bb"," ","Kb","Bb","Nb"," "],
+                        ["Pb","Pb","Pb","Pb"," "," ","Pb"," "],
+                        [" "," "," "," "," ","Rb","Pb"," "],
+                        ["Pb"," "," ","Pb"," "," ","Pw"," "],
+                        [" "," ","Rb"," "," "," "," "," "],
+                        [" ","Qb"," "," "," "," "," ","Kw"],
+                        ["Pw","Pw","Pw","Pw","Pw"," ","Pw","Pw"],
+                        ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+        curr_game=Game_board.new(test_board)         
+        curr_game.white_king=curr_game.curr_board[5][7]
+        # puts " "
+        # curr_game.print_board
+        expect(curr_game.check_mate?('w',5,7)).to eql true
+
+        end
 
     end
 

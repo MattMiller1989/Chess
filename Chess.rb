@@ -144,7 +144,7 @@ class Game_board
             y_end=my_move.end_square.y
 
             stop_square=@curr_board[x_end][y_end]
-    
+            puts "stop_square: #{stop_square} x_end: #{x_end} y_end: #{y_end}"
             cap_team=stop_square.team 
             if curr_piece.team==cap_team
                 return false
