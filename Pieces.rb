@@ -147,7 +147,8 @@ class Bishop <Game_Piece
         x_diff=to_x-@x
         y_diff=to_y-@y
         # puts "@x: #{@x} @y: #{@y} to_x: #{to_x} to_y: #{to_y}"
-        dist = ((x_diff+y_diff)/2).abs
+        # dist = ((x_diff+y_diff)/2).abs
+        dist=(x_diff.abs+y_diff.abs)/2
         
         path = []
         
@@ -156,16 +157,17 @@ class Bishop <Game_Piece
 
         for i in 0..dist
             
-            #puts "@x+(i*x_dir): #{@x+(i*x_dir)} @y+(i*y_dir): #{@y+(i*y_dir)} "
+            
             path.push(curr_board[@x+(i*x_dir)][@y+(i*y_dir)])
 
         end
 
         
         # puts  "Path: #{path}" 
+        
         path.shift
         path.pop
-        # puts  "Path: #{path}" 
+        
         
         return path.all? {|s| s==" "}
         
@@ -216,7 +218,7 @@ class Queen <Game_Piece
         y_dist = (y_diff).abs
         
         path = []
-        dist = ((x_diff+y_diff)/2).abs
+        dist=(x_diff.abs+y_diff.abs)/2
 
         x_diff>0 ? x_dir=1:x_dir=-1
         y_diff>0 ? y_dir=1:y_dir=-1 

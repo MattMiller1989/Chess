@@ -206,7 +206,7 @@ class Game_board
                 check=true
             end
 
-            #   puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+            #    puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
         end
 
         return check
@@ -237,7 +237,7 @@ class Game_board
                 if @curr_board[curr_move.end_square.x][curr_move.end_square.y]!=" "
                     
                     if can_capture(curr_move)
-                         puts "cap"
+                         
                         valid_moves.push(m)
                    end
 

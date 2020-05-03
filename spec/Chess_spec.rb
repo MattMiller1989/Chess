@@ -49,11 +49,165 @@ describe Game_runner do
                     [" "," "," "," "," "," "," "," "],
                     ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
                     ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
             
             my_runner=Game_runner.new(board)
             test_board=my_runner.my_board
             test_board.white_king=test_board.curr_board[4][3]
             my_move=test_board.make_move("d3c3")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "3.) checks for false positives" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pw"," "," "," "],
+                    [" ","Rb"," "," "," "," ","Pw"," "],
+                    [" "," "," "," "," "," ","Kw"," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][6]
+            my_move=test_board.make_move("g3h3")
+            expect(my_runner.check_move(my_move,'white')).to eql true
+
+        end
+        it "4.) checks for false positives" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb"," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pw"," ","Pb"," "],
+                    [" ","Rb"," "," "," "," ","Pw"," "],
+                    [" "," "," "," "," "," ","Kw"," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][6]
+            my_move=test_board.make_move("g3f3")
+            expect(my_runner.check_move(my_move,'white')).to eql true
+
+        end
+        it "5.) checks for false positives" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb"," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pw"," ","Pb"," "],
+                    [" ","Rb"," "," "," "," ","Pw"," "],
+                    [" "," "," "," "," "," ","Kw"," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][6]
+            my_move=test_board.make_move("g3h4")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "6.) checks for false positives" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb"," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pw"," ","Pb"," "],
+                    [" ","Rb"," "," "," "," ","Pw"," "],
+                    [" "," "," "," "," "," ","Kw"," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][6]
+            my_move=test_board.make_move("g3f4")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "7.) allows another piece to 'attack' out of check" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    ["Rb","Pb"," ","Pb"," "," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pb"," ","Pb"," "],
+                    [" "," "," ","Kw"," ","Pw"," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   r    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[4][3]
+            my_move=test_board.make_move("f4e5")
+            expect(my_runner.check_move(my_move,'white')).to eql true
+
+        end
+        it "8.) Does not allow a move unless it takes the player out of check" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    ["Rb","Pb"," ","Pb"," "," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pb"," ","Pb"," "],
+                    [" "," "," ","Kw"," ","Pw"," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   e    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[4][3]
+            my_move=test_board.make_move("d4d5")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "9.) Does not allow a move unless it takes the player out of check" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb","Rb","Pb"," "," ","Pb","Pb"],
+                    [" "," "," "," ","Bb"," "," "," "],
+                    [" "," "," "," ","Pb"," ","Pb"," "],
+                    [" "," "," ","Kw"," ","Pw"," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   e    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[4][3]
+            my_move=test_board.make_move("d4c4")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "10.) Does not allow a move unless it takes the player out of check" do
+
+            board= [[" ","Nb"," ","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb","Rb","Pb"," "," ","Pb","Pb"],
+                    [" "," "," "," "," "," ","Bb"," "],
+                    [" "," "," "," ","Pb","Pw","Pb"," "],
+                    [" "," "," ","Kw"," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw"," ","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+                    #a     b     c    d   e    f   g     h
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[4][3]
+            my_move=test_board.make_move("d4e4")
+            puts " blocked path? #{test_board.curr_board[3][5]}"
             expect(my_runner.check_move(my_move,'white')).to eql true
 
         end
@@ -151,7 +305,7 @@ describe Game_board do
         it "Allows Queen move" do
             # test_move=Move.new("d8b6",@my_game.curr_board)
             test_move=@my_game.make_move("d8b6",@my_game.curr_board)
-            expect(test_move.is_valid).to eql true
+            expect(test_move.is_valid).to eql false
         end
         it "Returns false when Queen move is invalid" do
             # test_move=Move.new("d8a6",@my_game.curr_board)

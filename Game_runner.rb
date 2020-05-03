@@ -5,14 +5,16 @@ require_relative 'Chess'
 class Game_runner
     attr_reader :my_board
     def initialize(board=nil)
+        @move_list=[]
         if board==nil
             @my_board=Game_board.new
             @my_board.print_board
             play_game  
+            
         else
             @my_board=Game_board.new(board)
         end
-        @move_list=[]
+        
              
     end
     def play_game
@@ -26,11 +28,7 @@ class Game_runner
         
         while !game_over
 
-                #  if turn== 'white'
-                #     curr_king=@my_board.white_king
-                # else
-                #     curr_king=@my_board.black_king
-                # end
+                
 
                 curr_move=get_move(turn)
 
@@ -120,13 +118,15 @@ class Game_runner
         y_end=my_move.end_square.y
         curr_piece=my_move.piece
         if curr_piece.is_a? King 
-            
+            # puts "FCKK?!?"
             
             check = @my_board.in_check?(curr_team[0],x_end,y_end)
+            # puts "check: #{check} x_end: #{x_end} y_end: #{y_end}"
             if check
                 puts "You cannot move into check!!1!!"
             end
         else
+           
             if curr_team== 'white'
                 curr_king=@my_board.white_king
             else
@@ -134,7 +134,7 @@ class Game_runner
             end
                 temp=@my_board.curr_board[x_end][y_end]
                 @my_board.curr_board[x_end][y_end]=" "
-
+                # puts "#{temp}"
                 check=@my_board.in_check?(curr_team[0],curr_king.x,curr_king.y)
                 if check
                     puts "You Must move out of check"
@@ -143,10 +143,10 @@ class Game_runner
         end
         
         
-
+        # puts "#{my_move} #{check}"
         return check
 
     end
 end
 
-# my_game=Game_runner.new
+my_game=Game_runner.new
