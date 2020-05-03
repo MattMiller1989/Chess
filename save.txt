@@ -1,0 +1,292 @@
+---
+board: !ruby/object:Game_board
+  curr_board: &3
+  - - !ruby/object:Rook
+      x: 0
+      y: 0
+      team: b
+    - !ruby/object:Knight
+      x: 0
+      y: 1
+      team: b
+    - !ruby/object:Bishop
+      x: 0
+      y: 2
+      team: b
+    - !ruby/object:Queen
+      x: 0
+      y: 3
+      team: b
+    - &1 !ruby/object:King
+      x: 0
+      y: 4
+      team: b
+    - !ruby/object:Bishop
+      x: 0
+      y: 5
+      team: b
+    - !ruby/object:Knight
+      x: 0
+      y: 6
+      team: b
+    - !ruby/object:Rook
+      x: 0
+      y: 7
+      team: b
+  - - !ruby/object:Pawn
+      x: 1
+      y: 0
+      team: b
+      first_move: true
+    - !ruby/object:Pawn
+      x: 1
+      y: 1
+      team: b
+      first_move: true
+    - !ruby/object:Pawn
+      x: 1
+      y: 2
+      team: b
+      first_move: true
+    - !ruby/object:Pawn
+      x: 1
+      y: 3
+      team: b
+      first_move: true
+    - " "
+    - !ruby/object:Pawn
+      x: 1
+      y: 5
+      team: b
+      first_move: true
+    - !ruby/object:Pawn
+      x: 1
+      y: 6
+      team: b
+      first_move: true
+    - !ruby/object:Pawn
+      x: 1
+      y: 7
+      team: b
+      first_move: true
+  - - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - " "
+    - " "
+    - " "
+    - " "
+    - &5 !ruby/object:Pawn
+      x: 3
+      y: 4
+      team: b
+      first_move: false
+    - " "
+    - " "
+    - " "
+  - - " "
+    - &4 !ruby/object:Pawn
+      x: 4
+      y: 1
+      team: w
+      first_move: false
+    - &6 !ruby/object:Pawn
+      x: 4
+      y: 2
+      team: w
+      first_move: false
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - !ruby/object:Pawn
+      x: 6
+      y: 0
+      team: w
+      first_move: true
+    - " "
+    - " "
+    - !ruby/object:Pawn
+      x: 6
+      y: 3
+      team: w
+      first_move: true
+    - !ruby/object:Pawn
+      x: 6
+      y: 4
+      team: w
+      first_move: true
+    - !ruby/object:Pawn
+      x: 6
+      y: 5
+      team: w
+      first_move: true
+    - !ruby/object:Pawn
+      x: 6
+      y: 6
+      team: w
+      first_move: true
+    - !ruby/object:Pawn
+      x: 6
+      y: 7
+      team: w
+      first_move: true
+  - - !ruby/object:Rook
+      x: 7
+      y: 0
+      team: w
+    - !ruby/object:Knight
+      x: 7
+      y: 1
+      team: w
+    - !ruby/object:Bishop
+      x: 7
+      y: 2
+      team: w
+    - !ruby/object:Queen
+      x: 7
+      y: 3
+      team: w
+    - &2 !ruby/object:King
+      x: 7
+      y: 4
+      team: w
+    - !ruby/object:Bishop
+      x: 7
+      y: 5
+      team: w
+    - !ruby/object:Knight
+      x: 7
+      y: 6
+      team: w
+    - !ruby/object:Rook
+      x: 7
+      y: 7
+      team: w
+  black_king: *1
+  white_king: *2
+  disp_array:
+  - - '8'
+    - "♜"
+    - "♞"
+    - "♝"
+    - "♛"
+    - "♚"
+    - "♝"
+    - "♞"
+    - "♜"
+  - - '7'
+    - "♟"
+    - "♟"
+    - "♟"
+    - "♟"
+    - " "
+    - "♟"
+    - "♟"
+    - "♟"
+  - - '6'
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - '5'
+    - " "
+    - " "
+    - " "
+    - " "
+    - "♟"
+    - " "
+    - " "
+    - " "
+  - - '4'
+    - " "
+    - "♙"
+    - "♙"
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - '3'
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+    - " "
+  - - '2'
+    - "♙"
+    - " "
+    - " "
+    - "♙"
+    - "♙"
+    - "♙"
+    - "♙"
+    - "♙"
+  - - '1'
+    - "♖"
+    - "♘"
+    - "♗"
+    - "♕"
+    - "♔"
+    - "♗"
+    - "♘"
+    - "♖"
+  - - " "
+    - a
+    - b
+    - c
+    - d
+    - e
+    - f
+    - g
+    - h
+move_list:
+- !ruby/object:Move
+  board: *3
+  start_square: !ruby/object:Square
+    x: 6
+    y: 1
+  end_square: !ruby/object:Square
+    x: 4
+    y: 1
+  piece: *4
+- !ruby/object:Move
+  board: *3
+  start_square: !ruby/object:Square
+    x: 1
+    y: 4
+  end_square: !ruby/object:Square
+    x: 3
+    y: 4
+  piece: *5
+- !ruby/object:Move
+  board: *3
+  start_square: !ruby/object:Square
+    x: 6
+    y: 2
+  end_square: !ruby/object:Square
+    x: 4
+    y: 2
+  piece: *6
+turn: black
