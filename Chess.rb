@@ -193,7 +193,7 @@ class Game_board
                 if (n.y-y).abs==1
                     
                     is_allowed=n.is_move_allowed(x,y,true)
-                    puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
+                    # puts "#{x} #{y} n: #{n} x:#{n.x} y:#{n.y} #{is_allowed} #{n.check_path(x,y,@curr_board)}"
                 else
                     is_allowed=false
                 end

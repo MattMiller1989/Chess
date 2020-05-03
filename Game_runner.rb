@@ -3,17 +3,23 @@ require_relative 'Move'
 require_relative 'Chess'
 
 class Game_runner
-
-    def initialize
-        @my_board=Game_board.new
+    attr_reader :my_board
+    def initialize(board=nil)
+        if board==nil
+            @my_board=Game_board.new
+            @my_board.print_board
+            play_game  
+        else
+            @my_board=Game_board.new(board)
+        end
         @move_list=[]
-        play_game       
+             
     end
     def play_game
         
         turn='white'
         game_over=false
-        @my_board.print_board
+        # @my_board.print_board
         puts "Let's Play Chess!! Here are some examples of valid inputs: a2a4 a5a2 b4h2"
         
         check =false
@@ -99,40 +105,48 @@ class Game_runner
             valid_move=true
         end
         
-        if move_into_check?(curr_move,team)
-            valid_move=false
+        if valid_move
+            
+            if move_into_check?(curr_move,team)
+                valid_move=false
+            end
         end
          
         return valid_move
         
     end
     def move_into_check?(my_move,curr_team)
+        x_end=my_move.end_square.x
+        y_end=my_move.end_square.y
         curr_piece=my_move.piece
         if curr_piece.is_a? King 
-            x_end=my_move.end_square.x
-            y_end=my_move.end_square.y
+            
             
             check = @my_board.in_check?(curr_team[0],x_end,y_end)
-            
+            if check
+                puts "You cannot move into check!!1!!"
+            end
         else
             if curr_team== 'white'
                 curr_king=@my_board.white_king
             else
                 curr_king=@my_board.black_king
             end
+                temp=@my_board.curr_board[x_end][y_end]
+                @my_board.curr_board[x_end][y_end]=" "
 
                 check=@my_board.in_check?(curr_team[0],curr_king.x,curr_king.y)
-                
-                
+                if check
+                    puts "You Must move out of check"
+                end    
+                @my_board.curr_board[x_end][y_end]=temp
         end
         
-        if check
-            puts "You cannot move into check!!1!!"
-        end
+        
 
         return check
 
     end
 end
 
-my_game=Game_runner.new
+# my_game=Game_runner.new

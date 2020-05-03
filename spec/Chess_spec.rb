@@ -1,7 +1,64 @@
 require_relative '../Chess'
 require_relative '../Pieces'
 require_relative '../Game_runner'
+describe Game_runner do
+    describe '#check_move' do
+        it "does not allow move into check" do
 
+            board= [[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," ","Pb"," "," "," "],
+                    [" "," "," "," ","Pw"," "," "," "],
+                    [" ","Rb"," "," "," "," "," "," "],
+                    [" "," "," ","Kw"," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][3]
+            my_move=test_board.make_move("d3d4")
+            expect(my_runner.check_move(my_move,'white')).to eql false
+
+        end
+        it "1.) checks for false positives" do
+
+            board= [[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," ","Pb"," "," "," "],
+                    [" "," "," "," ","Pw"," "," "," "],
+                    [" ","Rb"," "," "," "," "," "," "],
+                    [" "," "," ","Kw"," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[5][3]
+            my_move=test_board.make_move("d3c3")
+            expect(my_runner.check_move(my_move,'white')).to eql true
+
+        end
+        it "2.) checks for false positives" do
+
+            board= [[" ","Nb","Bb","Qb","Kb","Bb","Nb","Rb"],
+                    [" ","Pb"," ","Pb","Pb","Pb","Pb","Pb"],
+                    [" "," "," "," ","Pb"," "," "," "],
+                    [" "," "," "," ","Pw"," "," "," "],
+                    [" ","Rb"," ","Kw"," "," "," "," "],
+                    [" "," "," "," "," "," "," "," "],
+                    ["Pw","Pw","Pw","Pw","Pw","Pw","Pw","Pw"],
+                    ["Rw","Nw","Bw","Qw"," ","Bw","Nw","Rw"]]
+            
+            my_runner=Game_runner.new(board)
+            test_board=my_runner.my_board
+            test_board.white_king=test_board.curr_board[4][3]
+            my_move=test_board.make_move("d3c3")
+            expect(my_runner.check_move(my_move,'white')).to eql true
+
+        end
+    end
+end
 describe Move do
     describe "#is_valid" do
         before(:each) do
